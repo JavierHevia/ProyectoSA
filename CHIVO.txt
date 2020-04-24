@@ -63,5 +63,9 @@ http://35.237.64.172:49160/
 
 	# POLIPROPILENO
 
-
 sudo docker run --name javierhevia22 -p 80:8080 -d javierhevia22/proyecto
+
+
+	##GOOGLE VM
+cloud build ---> estan las imagenes
+cloud Run   ---> esta el contenedor
