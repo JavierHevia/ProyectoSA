@@ -18,7 +18,7 @@ const app = express()
 app.use(cors())
 
 app.get('/', (req, res) => {
-  res.send('Hello World6')
+  res.send('Hello World7')
 })
 
 app.get('/quien', (req, res) => {

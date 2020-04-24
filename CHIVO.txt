@@ -58,8 +58,8 @@ gcloud init
 /usr/src/appsr	
 default-allow-http
 default-allow-https
-http://35.196.120.141:49160/
-http://35.196.120.141:49160/
+http://35.237.64.172:49160/
+http://35.237.64.172:49160/
 
 	# POLIPROPILENO
 
