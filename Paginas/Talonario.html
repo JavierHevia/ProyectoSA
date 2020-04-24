@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]> <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]> <html class="lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Catalogo de Autos</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="css/bootstrap.min.css" rel="stylesheet"> 
+  <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<body>
+
+  <h1 class="register-title">Autos</h1>
+  <form class="register">
+
+    <input type="ID" id="ID" class="register-input" placeholder="ID">
+    <input type="Placa" id="Placa" class="register-input" placeholder="Placa">
+	<br>
+	<p>Subastable</p>
+	<br>
+	<input type="radio" name="Subastable" value="TRUE">SI 
+    <input type="radio" name="Subastable" value="FALSE">NO <br> <br>
+	
+	<p>Externa (para fotos)</p>
+	<br>
+	<input type="radio" name="Externa" value="TRUE">SI 
+    <input type="radio" name="Externa" value="FALSE">NO <br>
+	
+    <!--<button type="submit" value="Iniciar Sesión" onclick="prueba()" class="register-button">Iniciar Sesión </button>-->
+  </form>
+
+<div style="width: 273px; margin: 0 auto;">
+<center>
+
+	  <button value="Iniciar Sesión" onclick="prueba()" class="register-button"> Mostrar Todo</button>
+	  <button value="Buscar" onclick="Buscar()" class="register-button"> Buscar</button>
+	  <button value="Ver mas fotos" onclick="Foto()" class="register-button"> Ver Mas fotos</button>
+	  <button value="Estado" onclick="Estado()" class="register-button"> Estado</button>
+	  <button value="Editar" onclick="location.href='Editar.html'" class="register-button"> Editar Información</button>
+
+</center>
+</div>
+	<br><br>
+<center>
+	 <div id="tabla">
+	 
+	 </div>
+</center>
+   <script type="text/javascript" src="server.js"></script>
+   <script> 
+
+	 function prueba(){
+		
+		var xhttp = new XMLHttpRequest(); 
+		//xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo", true);            // url: 'http://127.0.0.1:7070/Vehiculo',
+		xhttp.open("GET", "http://35.237.64.172:49160/Vehiculo", true); 
+		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhttp.onreadystatechange = function() {
+		   if (this.readyState == 4 && this.status == 200) {
+			 // Response
+			 var response = this.responseText;
+			
+			 var obj = JSON.parse(response);
+			 //alert(obj)
+			 //alert(obj[0]._id)
+			 var tablea = '<table  border="4">' + '<tr>' +' <td><strong>ID</strong></td> '
+								   +' <td><strong>Estado</strong></td> '
+								   +' <td><strong>Tipo</strong></td> '
+								   +' <td><strong>Marca</strong></td> '
+								   +' <td><strong>Linea</strong></td> '
+								   +' <td><strong>Modelo</strong></td> '
+								   +' <td><strong>Placa</strong></td> '
+								   +' <td><strong>Color</strong></td> '
+								   +' <td><strong>Arranca</strong></td> '
+								   +' <td><strong>Camina</strong></td> '	
+								   +' <td><strong>Falla Mecanica</strong></td> '
+								   +' <td><strong>Garantia</strong></td> '
+								   +' <td><strong>Inundado</strong></td> '
+								   +' <td><strong>Colision</strong></td> '
+								   +' <td><strong>Imagen</strong></td> '
+								   +'</tr>'
+			for (i = 0; i < obj.length; i++) { //obj[i].foto
+			 
+				tablea += '<tr>' + '<td>' +obj[i]._id+'</td>' 
+								+ '<td>' +obj[i].estado+'</td>' 
+								+ '<td>' +obj[i].tipo+'</td>' 
+								+ '<td>' +obj[i].marca+'</td>' 
+								+ '<td>' +obj[i].linea+'</td>' 
+								+ '<td>' +obj[i].modelo+'</td>' 
+								+ '<td>' +obj[i].placa+'</td>' 
+								+ '<td>' +obj[i].color+'</td>'
+							    + '<td>' +obj[i].arranca+'</td>'
+								+ '<td>' +obj[i].camina+'</td>'
+								+ '<td>' +obj[i].fallaMecanica+'</td>'
+								+ '<td>' +obj[i].garantiaInspeccion+'</td>'
+								+ '<td>' +obj[i].inundado+'</td>'
+								tablea += '<td>' +obj[i].colision+'</td>';
+								var fotos = obj[i].foto;
+								var res = fotos.split(",");
+
+								tablea += '<td>' +'<img src="./img/'+res[0]+'\" alt="" width="150" height="100" />'+'</td>';
+							
+				+'</tr>' 
+			}
+				tablea += '</table>'
+				document.getElementById("tabla").innerHTML = tablea
+		   }
+		};		
+		xhttp.send();
+		 alert("Enviado Correctamente")
+	 }
+	 
+	 function Buscar(){
+
+		var id2 =    document.getElementById("ID").value;
+		var placa =  document.getElementById("Placa").value;
+		
+		var subastable=document.getElementsByName('Subastable');
+		var resultadoarr="";
+		for(var i=0;i<subastable.length;i++)
+        {
+            if(subastable[i].checked)
+				if (subastable[i].value=="TRUE"){
+					//resultadoarr="\""+"SUBASTABLE"+"\"";
+					resultadoarr="\""+3+"\"";
+				}
+        }
+		
+		var envjson = '';
+		var params = '';
+		
+		if(id2 =='' && placa =='' && resultadoarr ==''){
+			alert('Debe de ingresar por lo menos un dato')
+			
+		}else if (placa =='' && resultadoarr ==''){
+			var pp = parseInt(id2)
+			envjson = "{ \"_id\":"+id2+"}";
+			params = "_id="+pp; 
+			
+		}else if (id2 =='' && resultadoarr ==''){
+			placa = "\""+placa+"\"";
+			envjson = "{ \"placa\":"+placa+"}";
+			params = "placa="+placa;
+			
+		}else if (id2 =='' &&  placa ==''){
+			envjson = "{ \"estado\":"+resultadoarr+"}";
+			params = "estado="+resultadoarr;
+			
+		}
+
+		//xhttp.open("get", "http://127.0.0.1:7070/FindAuto", true); 
+	
+		$.ajax({
+					type: 'GET',
+					url: 'http://35.237.64.172:49160/Vehiculo?'+params,
+					//url: 'http://127.0.0.1:7070/Vehiculo?'+params,
+					//data: {
+						//jsonData: envjson
+					//},
+					headers: {
+					'Content-type': 'application/x-www-form-urlencoded'
+					},
+					success : function(response){
+						//alert("Ingresado Correctamente");
+						if (response.length >=1){
+							var respuesta = JSON.parse('{ "cod":200, "state":"OK"}')
+							alert(respuesta.cod + " " + respuesta.state);
+						}else if (response.cod === 404){
+							alert(response.cod + " " + response.state);
+						}
+						
+						
+						var tablea = '<table  border="4">' + '<tr>' +' <td><strong>ID</strong></td> '
+								   +' <td><strong>Estado</strong></td> '
+								   +' <td><strong>Tipo</strong></td> '
+								   +' <td><strong>Marca</strong></td> '
+								   +' <td><strong>Linea</strong></td> '
+								   +' <td><strong>Modelo</strong></td> '
+								   +' <td><strong>Placa</strong></td> '
+								   +' <td><strong>Color</strong></td> '
+								   +' <td><strong>Arranca</strong></td> '
+								   +' <td><strong>Camina</strong></td> '	
+								   +' <td><strong>Falla Mecanica</strong></td> '
+								   +' <td><strong>Garantia</strong></td> '
+								   +' <td><strong>Inundado</strong></td> '
+								   +' <td><strong>Colision</strong></td> '
+								   +' <td><strong>Imagen</strong></td> '
+								   +'</tr>'
+			for (i = 0; i < response.length; i++) {
+			 
+				tablea += '<tr>' + '<td>' +response[i]._id+'</td>' 
+								+ '<td>' +response[i].estado+'</td>' 
+								+ '<td>' +response[i].tipo+'</td>' 
+								+ '<td>' +response[i].marca+'</td>' 
+								+ '<td>' +response[i].linea+'</td>' 
+								+ '<td>' +response[i].modelo+'</td>' 
+								+ '<td>' +response[i].placa+'</td>' 
+								+ '<td>' +response[i].color+'</td>'
+							    + '<td>' +response[i].arranca+'</td>'
+								+ '<td>' +response[i].camina+'</td>'
+								+ '<td>' +response[i].fallaMecanica+'</td>'
+								+ '<td>' +response[i].garantiaInspeccion+'</td>'
+								+ '<td>' +response[i].inundado+'</td>'
+								tablea += '<td>' +response[i].colision+'</td>';
+								var fotos = response[i].foto;
+								var res = fotos.split(",");
+
+								tablea += '<td>' +'<img src="./img/'+res[0]+'\" alt="" width="150" height="100" />'+'</td>';
+								
+				+'</tr>' 
+			}
+				tablea += '</table>'
+				document.getElementById("tabla").innerHTML = tablea
+						
+					},
+					error: function(validationResponse) {
+					   alert("ERROR al enviar") 
+						// alert(validationResponse.responseText)	
+
+					}
+			});
+		
+		alert("Enviado Correctamente")
+	 }
+	 
+	 
+	 function Foto(){
+		
+		var id2 =     document.getElementById("ID").value;
+		var Externa = document.getElementsByName('Externa');
+		var resultadoarr="";
+		
+		for(var i=0;i<Externa.length;i++)
+        {
+            if(Externa[i].checked)
+				if(Externa[i].checked)
+                   resultadoins=Externa[i].value;
+        }
+		
+		var envjson= '';
+		var params = '';
+		if(id2 == ''){
+			alert('Debe de ingresar por lo menos un dato')
+			
+		}else if (resultadoarr == ''){
+			var pp = parseInt(id2)
+			envjson = "{ \"_id\":"+id2+"}";
+			params = "_id="+pp; 
+		
+		}else if (id2 != '' &&  resultadoarr != ''){
+			var pp = parseInt(id2)
+			envjson = "{ \"_id\":"+id2+"}";
+			params = "_id="+pp;
+		}
+		
+		$.ajax({
+					type: 'GET',
+					url: 'http://35.237.64.172:49160/Foto?'+params,
+					//url: 'http://127.0.0.1:7070/Foto?'+params,
+					//data: {
+					//	jsonData: envjson
+					//},
+					headers: {
+					'Content-type': 'application/x-www-form-urlencoded'
+					},
+					// dataType: 'json',
+					success : function(response){
+						//alert("Ingresado Correctamente");
+						//alert(response[0]._id);
+						if (response.length >=1){
+							var respuesta = JSON.parse('{ "cod":200, "state":"OK"}')
+							alert(respuesta.cod + " " + respuesta.state);
+						}else if (response.cod === 404){
+							alert(response.cod + " " + response.state);
+						}
+						var tablea = "";
+						
+						var tablea = '<table  border="4">' + '<tr>' +' <td><strong>ID</strong></td> '
+								   +' <td><strong>URL</strong></td> '
+								   +' <td><strong>Imagen</strong></td> ';
+								   
+					for (i = 0; i < response.length; i++) {
+					 
+						var fotos = response[i].foto;
+						var res = fotos.split(",");
+						
+						for (o = 0; o < res.length; o++){
+						    
+							tablea += '<tr>' + '<td>' +response[i]._id+'</td>' 
+							tablea += '<td>' +"./img/"+res[o]+'</td>'
+							tablea += '<td>'+'<img src="./img/'+res[o]+'\" alt="" width="600" height="300" />'+'</td>';
+							tablea += '</tr>' ;
+						}
+					}
+					tablea += '</table>'
+					
+				document.getElementById("tabla").innerHTML = tablea
+						
+					},
+					error: function(validationResponse) {
+					   alert("ERROR al enviar")  
+					}
+			});
+		
+		alert("Enviado Correctamente")
+	 
+	 
+	 
+	 }
+	 
+	 function Estado(){
+		
+		var id2 = document.getElementById("ID").value;
+				
+		var envjson= '';
+		var params = '';
+		if(id2 == ''){
+			alert('Debe de ingresar por lo menos un dato')
+		}else{
+			envjson = "{ \"_id\":"+id2+"}";	
+			var pp = parseInt(id2)
+			params = "_id="+pp; 
+		}
+		
+		$.ajax({
+					type: 'GET',
+					url: 'http://35.237.64.172:49160/Estado?'+params,
+					//url: 'http://127.0.0.1:7070/Estado?'+params,
+					//data: {
+					//	jsonData: envjson
+					//},
+					//dataType: 'json',
+					headers: {
+					'Content-type': 'application/x-www-form-urlencoded'
+					},
+					success : function(response){
+						//alert("Ingresado Correctamente");
+						//alert(response[0]._id);
+						if (response.length >=1){
+							var respuesta = JSON.parse('{ "cod":200, "state":"OK"}')
+							alert(respuesta.cod + " " + respuesta.state);
+						}else if (response.cod === 404){
+							alert(response.cod + " " + response.state);
+						}
+						var tablea = "";
+						
+						var tablea = '<table  border="4">' + '<tr>' +' <td><strong>ID</strong></td> '
+								   +' <td><strong>Nombre</strong></td> '
+								   +' <td><strong>Subastable</strong></td> ';
+								   
+					for (i = 0; i < response.length; i++) {
+					 
+						var fotos = response[i].foto;
+						var res = fotos.split(",");
+						    
+						tablea += '<tr>'+ '<td>' +response[i]._id+'</td>';
+						tablea += '<td>' +response[i].marca+'</td>'; 
+						if (response[i].estado == "SUBASTABLE"){
+							tablea += '<td>'+"TRUE" +'</td>';
+						}else {
+							tablea += '<td>'+"FALSE"+'</td>';
+						}
+						tablea += '</tr>';
+						
+					}
+					tablea += '</table>'
+					
+				document.getElementById("tabla").innerHTML = tablea
+						
+					},
+					error: function(validationResponse) {
+					   alert("ERROR al enviar")  
+					}
+			});
+		
+		alert("Enviado Correctamente") 
+	 }
+
+
+   </script>
+</body>
+</html>

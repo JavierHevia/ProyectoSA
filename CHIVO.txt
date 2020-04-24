@@ -1,0 +1,67 @@
+##CAMBIAR LA CLAVE DEL ROOT EN UBUNTU GOOGLE
+
+	sudo passwd
+
+Contraseña: 1234
+
+##AGREGAR USUARIO SUDO A UBUNTU
+
+	usermod -aG sudo Javier
+
+http://34.74.251.114:8080
+
+Javier@34.74.251.114
+
+VIDEO: https://www.youtube.com/watch?v=jSbehm2M1pg
+
+
+ssh-copy-id Javier@34.74.251.114
+
+http://34.73.248.251:8080
+
+gcloud app deploy
+
+gcloud app browse
+34.73.248.251
+
+	##remove images
+sudo docker images
+sudo docker system prune
+sudo docker system prune -a
+
+	##remove contenedores
+sudo docker ps
+sudo docker stop 
+sudo docker rm
+
+
+
+	##creando contenedor con server.js
+sudo docker build -t javierhevia22/proyecto .
+sudo docker build -t root/proyecto .
+sudo docker images
+sudo docker run -p 49160:8080 -d javierhevia22/proyecto
+sudo docker run -it -p 49160:8080 -d javierhevia22/proyecto
+sudo docker ps
+
+sudo docker logs 
+sudo docker exec -it 25ee364b3db8 /bin/bash
+curl -i localhost:49160
+
+	##ver imagenges Docker
+sudo docker images
+
+	##iniciar cmd gcloud
+gcloud init
+
+	## DIRECTORIO
+/usr/src/appsr	
+default-allow-http
+default-allow-https
+http://35.196.120.141:49160/
+http://35.196.120.141:49160/
+
+	# POLIPROPILENO
+
+
+sudo docker run --name javierhevia22 -p 80:8080 -d javierhevia22/proyecto

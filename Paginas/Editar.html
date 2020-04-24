@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]> <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]> <html class="lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Edición de Autos</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="css/bootstrap.min.css" rel="stylesheet"> 
+  <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<body>
+
+  <h1 class="register-title">Editar Autos</h1>
+  <form class="register">
+
+    <input type="ID" id="ID" class="register-input" placeholder="ID"> <br>
+	<p>Estado</p>
+    <select id="Estado">
+	  <option value="1">1.Tránsito</option>
+	  <option value="2">2.Almacenaje</option>
+	  <option value="3">3.Subastable</option>
+	  <option value="4">4.Adjudicado</option>
+	  <option value="5">5.Vendido</option>
+	</select>
+	<input type="Afiliado" id="Afiliado" class="register-input" placeholder="Afiliado Adjudicado (Código)">
+	<input type="Valor_adjudicado" id="Valor_adjudicado" class="register-input" placeholder="Valor Adjudicado (Q)">
+	<br>
+    <!--<button type="submit" value="Iniciar Sesión" onclick="prueba()" class="register-button">Iniciar Sesión </button>-->
+  </form>
+
+<div style="width: 273px; margin: 0 auto;">
+<center>
+	 <button value="Iniciar Sesión" onclick="prueba()" class="register-button"> Mostrar Todo</button>
+	 <button value="Editar"  onclick="Editar()" class="register-button"> Editar Información</button>
+</center>
+</div>
+
+	<br><br>
+<center>
+	 <div id="tabla">
+	 
+	 </div> 
+   
+   <script type="text/javascript" src="server.js"></script>
+   <script> 
+   
+   function prueba(){
+		
+		var xhttp = new XMLHttpRequest();
+		//xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo", true); 
+		xhttp.open("GET", "http://35.237.64.172:49160/Vehiculo", true); 
+		//xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo", true);  
+		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhttp.onreadystatechange = function() {
+		   if (this.readyState == 4 && this.status == 200) {
+			 // Response
+			 var response = this.responseText;
+			
+			 var obj = JSON.parse(response);
+			 //alert(obj)
+			 //alert(obj[0]._id)
+			 var tablea = '<table  border="4">' + '<tr>' +' <td><strong>ID</strong></td> '
+								   +' <td><strong>Estado</strong></td> '
+								   +' <td><strong>Tipo</strong></td> '
+								   +' <td><strong>Marca</strong></td> '
+								   +' <td><strong>Linea</strong></td> '
+								   +' <td><strong>Modelo</strong></td> '
+								   +' <td><strong>Placa</strong></td> '
+								   +' <td><strong>Color</strong></td> '
+								   +' <td><strong>Arranca</strong></td> '
+								   +' <td><strong>Camina</strong></td> '	
+								   +' <td><strong>Falla Mecanica</strong></td> '
+								   +' <td><strong>Garantia</strong></td> '
+								   +' <td><strong>Inundado</strong></td> '
+								   +' <td><strong>Colision</strong></td> '
+								   +' <td><strong>Afiliado</strong></td> '
+								   +' <td><strong>Valor_adjudicado</strong></td> '
+								   +' <td><strong>Imagen</strong></td> '
+								   +'</tr>'
+			for (i = 0; i < obj.length; i++) { //obj[i].foto
+			 
+				tablea += '<tr>' + '<td>' +obj[i]._id+'</td>' 
+								+ '<td>' +obj[i].estado+'</td>' 
+								+ '<td>' +obj[i].tipo+'</td>' 
+								+ '<td>' +obj[i].marca+'</td>' 
+								+ '<td>' +obj[i].linea+'</td>' 
+								+ '<td>' +obj[i].modelo+'</td>' 
+								+ '<td>' +obj[i].placa+'</td>' 
+								+ '<td>' +obj[i].color+'</td>'
+							    + '<td>' +obj[i].arranca+'</td>'
+								+ '<td>' +obj[i].camina+'</td>'
+								+ '<td>' +obj[i].fallaMecanica+'</td>'
+								+ '<td>' +obj[i].garantiaInspeccion+'</td>'
+								+ '<td>' +obj[i].inundado+'</td>'
+								tablea += '<td>' +obj[i].colision+'</td>';
+								tablea += '<td>' +obj[i].afiliado+'</td>';
+								tablea += '<td>' +obj[i].valor_adjudicado+'</td>';
+								var fotos = obj[i].foto;
+								var res = fotos.split(",");
+
+								tablea += '<td>' +'<img src="./img/'+res[0]+'\" alt="" width="150" height="100" />'+'</td>';
+							
+				+'</tr>' 
+			}
+				tablea += '</table>'
+				document.getElementById("tabla").innerHTML = tablea
+		   }
+		};		
+		xhttp.send();
+		alert("Enviado Correctamente")
+	 }
+	 
+	  function Editar(){
+		var id2 = document.getElementById("ID").value;
+		var Estado = document.getElementById("Estado").value;
+		var Afiliado = document.getElementById("Afiliado").value;
+		var Valor_adjudicado = document.getElementById("Valor_adjudicado").value;
+				
+		var envjson = '';
+		var param = '';
+		
+		if(id2 == ''){
+			alert('Debe de ingresar por lo menos un dato')
+		}else{
+		//year=2017&
+			envjson = "{ \"_id\":"+id2+", \"estado\":"+ Estado+", \"afiliado_adjudicado\":"+ Afiliado +", \"valor_adjudicado\":"+ Valor_adjudicado+"}";	
+			param = '_id='+id2+'&';
+			param += 'estado='+Estado+'&';
+			param += 'afiliado_adjudicado='+Afiliado+'&';
+			param += 'valor_adjudicado='+Valor_adjudicado;
+			;
+		}
+			
+			var xhttp = new XMLHttpRequest();
+			//xhttp.open("PUT", "http://127.0.0.1:7070/Vehiculo?"+param, true); 
+			xhttp.open("PUT", "http://35.237.64.172:49160/Vehiculo?"+param, true); 
+			xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xhttp.onreadystatechange = function() {
+			   if (this.readyState == 4 && this.status == 200) {
+				 // Response
+				 var response = this.responseText;
+				 var respuesta = JSON.parse(response)
+				 if (respuesta.cod === 201){
+					var respuesta = JSON.parse('{ "cod":201, "state":"Created"}')
+					alert(respuesta.cod + " " + respuesta.state);
+				}else if (respuesta.cod === 404){
+					alert(respuesta.cod + " " + respuesta.state);
+				}
+			   }		
+			};
+			
+			var data = {_id: id2,
+					estado: Estado, 
+					afiliado_adjudicado: Afiliado,
+					valor_adjudicado: Valor_adjudicado,
+			};
+			
+			//xhttp.send(JSON.stringify(data));
+			xhttp.send();
+		alert("Enviado Correctamente") 
+	  }
+   </script>
+</body>
+</html>

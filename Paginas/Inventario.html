@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]> <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]> <html class="lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Inventario</title>
+  <link rel="stylesheet" href="style.css">
+  <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<body>
+  <h1 class="register-title">Inventario</h1>
+  <form class="register">
+  
+    <!--<input type="Estado" id="Estado" class="register-input" placeholder="Estado">-->
+	<p>Estado</p>
+
+	<select id="Estado">
+	  <option value="1">1.Tránsito</option>
+	  <option value="2">2.Almacenaje</option>
+	  <option value="3">3.Subastable</option>
+	  <option value="4">4.Adjudicado</option>
+	  <option value="5">5.Vendido</option>
+	</select>
+	
+    <input type="tipo" id="tipo" class="register-input" placeholder="Tipo">
+	<input type="marca" id="marca" class="register-input" placeholder="Marca">
+	<input type="linea" id="linea" class="register-input" placeholder="Linea">
+	<input type="modelo" id="modelo" class="register-input" placeholder="Modelo">
+	<input type="placa" id="placa" class="register-input" placeholder="Placa">
+	<input type="colorr"  id="colorr" class="register-input" placeholder="Color">
+	<br>
+	<p>Arranca</p>
+	<br>
+	<input type="radio" name="Arranca" value="TRUE">SI 
+    <input type="radio" name="Arranca" value="FALSE">NO<br>
+	<br>
+	<p>Camina</p>
+	<br>
+	<input type="radio" name="Camina" value="TRUE">SI 
+    <input type="radio" name="Camina" value="FALSE">NO<br>
+	<br>
+	<p>Falla Mécanica</p>
+	<br>
+	<input type="radio" name="Mecanica" value="TRUE">SI 
+    <input type="radio" name="Mecanica" value="FALSE">NO<br>	
+	<br>
+	<p>Garantía de Inpspección</p>
+	<br>
+	<input type="radio" name="Inpspeccion" value="TRUE">SI 
+    <input type="radio" name="Inpspeccion" value="FALSE">NO<br>	
+	<br>	
+	<p>Inundado</p>
+	<br>
+	<input type="radio" name="Inundado" value="TRUE">SI 
+    <input type="radio" name="Inundado" value="FALSE">NO<br>	
+	<br>	
+	<p>Colisión</p>
+	<br>
+	<input type="radio" name="Colision" value="TRUE">SI 
+    <input type="radio" name="Colision" value="FALSE">NO <br>
+	<br>
+	<p>Foto</p>
+	<input type="file" id="adjunto" name="adjunto" accept=".jpg,.png" multiple="true">
+	<input type="file" id="adjunto2" name="adjunto2" accept=".jpg,.png" multiple="true">
+	<input type="file" id="adjunto3" name="adjunto3" accept=".jpg,.png" multiple="true">
+	<input type="file" id="adjunto4" name="adjunto4" accept=".jpg,.png" multiple="true">
+
+     <button  value="Crear Usuario" onclick="EnviarUsuario()" class="register-button"> Insertar </button>
+  </form>
+ 
+   <script> 
+  
+	 function EnviarUsuario(){
+	 
+		var estado = document.getElementById("Estado").value; 
+		var tipo =   document.getElementById("tipo").value;
+		var marca =  document.getElementById("marca").value;
+		var linea =  document.getElementById("linea").value;
+		var modelo = document.getElementById("modelo").value;
+		var placa =  document.getElementById("placa").value;
+		var color =  document.getElementById("colorr").value;
+		
+		var arranca=document.getElementsByName('Arranca');
+		var resultadoarr="";
+		for(var i=0;i<arranca.length;i++)
+        {
+            if(arranca[i].checked)
+                resultadoarr=arranca[i].value;
+				
+        }
+		
+		var camina=document.getElementsByName('Camina');
+		var resultadocam="";
+		for(var i=0;i<camina.length;i++)
+        {
+            if(camina[i].checked)
+                resultadocam=camina[i].value;
+				
+        }
+		
+		var mecanica=document.getElementsByName('Mecanica');
+		var resultadoMec="";
+		for(var i=0;i<mecanica.length;i++)
+        {
+            if(mecanica[i].checked)
+                resultadoMec=mecanica[i].value;
+				
+        }
+		
+		var inpspeccionT=document.getElementsByName('Inpspeccion');
+		var resultadoins="";
+		for(var i=0;i<inpspeccionT.length;i++)
+        {
+            if(inpspeccionT[i].checked)
+                resultadoins=inpspeccionT[i].value;
+				
+        }
+		
+		var inpspeccionInun=document.getElementsByName('Inundado');
+		var resultadoinun="";
+		for(var i=0;i<inpspeccionInun.length;i++)
+        {
+            if(inpspeccionInun[i].checked)
+                resultadoinun=inpspeccionInun[i].value;
+				
+        }
+		
+		var colision=document.getElementsByName('Colision');
+		var resultadoc="";
+		for(var i=0;i<colision.length;i++)
+        {
+            if(colision[i].checked)
+                resultadoc=colision[i].value;
+				
+        }
+		
+		var Foto =  document.getElementById("adjunto").value;
+		var Foto2 =  document.getElementById("adjunto2").value;
+		var Foto3 =  document.getElementById("adjunto3").value;
+		var Foto4 =  document.getElementById("adjunto4").value;
+	    
+		var file = Foto.split("\\");
+		var fileName = file[file.length-1];
+		
+		var file2 = Foto2.split("\\");
+		var fileName2 = file2[file2.length-1];
+		
+		var file3 = Foto3.split("\\");
+		var fileName3 = file3[file3.length-1];
+		
+		var file4 = Foto4.split("\\");
+		var fileName4 = file4[file4.length-1];
+		
+		fileName+=","+fileName2+","+fileName3+","+fileName4;
+		
+		//alert(fileName)
+		//url: 'http://35.237.64.172:49160/InsertarAUTO',
+		
+		var xhttp = new XMLHttpRequest();
+		//xhttp.open("POST", "http://127.0.0.1:7070/InsertarAUTO", true); 
+		xhttp.open("POST", "http://35.237.64.172:49160/InsertarAUTO", true); 
+		xhttp.setRequestHeader("Content-Type", "application/json");
+		xhttp.onreadystatechange = function() {
+		   if (this.readyState == 4 && this.status == 200) {
+			 // Response
+			 var response = this.responseText;
+			 alert(response)
+		   }
+		};
+		var data = {estado: estado,
+					tipo: tipo, 
+					marca: marca,
+					linea: linea,
+					modelo: modelo, 
+					placa: placa,
+					color: color, 
+					arranca: resultadoarr,
+					camina: resultadocam,
+					fallaMecanica: resultadoMec,
+					garantiaInspeccion: resultadoins,
+					inundado: resultadoinun,
+					colision: resultadoc,
+					foto: fileName
+					
+		};
+		xhttp.send(JSON.stringify(data));
+		
+		 alert("Enviado Correctamente")
+		
+	 }
+   </script>
+</body>
+</html>
