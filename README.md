@@ -1,3 +1,3 @@
 # ProyectoSA
 	Implementación de Jenkins
-	Actualización cada 20min
+	Actualización cada 5min
