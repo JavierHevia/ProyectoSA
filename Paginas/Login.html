@@ -26,7 +26,7 @@
 
 <div style="width: 273px; margin: 0 auto;">
 <center>
-  <button value="Iniciar Sesión" onclick="EnviarUsuario2()" class="register-button"> Iniciar Sesión</button>
+  <button value="Iniciar Sesión" onclick="prueba()" class="register-button"> Iniciar Sesión</button>
 </center>
 </div>
 
@@ -36,27 +36,33 @@
 		
 	 
 	 function prueba(){
+	 
+	    var Correos =   document.getElementById("Correo").value;
+		var Contrsenia = document.getElementById("Contrasena").value;
 		
-		$.ajax({
-		  type : "post",
-		  url : 'http://esb-danii-mor.eastus.azurecontainer.io/',
-		  contentType : "application/json",
-		  //crossDomain: true,
-		  dataType : "json",
-		  data: { usr: "JAVI", attrib: "JEJE" },
-		  success : function(data) {
-			   alert("success"); 
-			   alert("1"+xhr);	
-			   alert(xhr.usr);
-		  },
-		  error : function (xhr) {  
-			  alert("ERROR");  
-			  alert("Respuesta "+xhr); 
-			  alert(xhr.usr);
-		  }
-		});
+		var xhttp = new XMLHttpRequest();
+		xhttp.open("POST", "http://127.0.0.1:7070/Login", true); 
+		//xhttp.open("POST", "http://35.237.64.172:49160/InsertarAUTO", true); 
+		xhttp.setRequestHeader("Content-Type", "application/json");
+		xhttp.onreadystatechange = function() {
+		   if (this.readyState == 4 && this.status == 200) {
+			 // Response
+			 var response = this.responseText;
+			 var obj = JSON.parse(response);
+			 if (obj.cod !== undefined){ 
+				alert('Datos no correctos ' + obj.cod  + ' ' +obj.state)	
+			 }else {        // esta correcto el login lo mandas a tu pagina
+				alert(obj[0]._id)
+			 }
+			 
+		   }
+		};
+		var data = {correa: Correos,
+					contrasena: Contrsenia, 			
+		};
+		xhttp.send(JSON.stringify(data));
 		
-		 alert("prueba");     
+		 alert("Enviado Correctamente")     
 		
 	 }
 	 

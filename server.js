@@ -45,6 +45,43 @@ app.get('/quien', (req, res) => {
   res.send('Hello quien')
 })
 
+app.use(express.json())
+app.post('/Login', (req, res2) => {
+  // var theUrl = url.parse(req.url)
+  console.log(req.url)
+  console.log(req.body)
+
+  var json2 = {
+    correa: req.body.correa,
+    contrasena: req.body.contrasena
+  }
+
+  var MongoClient = require('mongodb').MongoClient
+  var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
+
+  function Insert (json) {
+    MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
+      if (err) throw err
+      var dbo = client.db('Base1') // .collection('Base1')
+      dbo.collection('Usuario').find(json).toArray(function (err, res) {
+        if (err) throw err
+        console.log('Dato Encontrado Correctamente find')
+        console.log(res)
+        client.close()
+        if (res.length === 0) {
+          var respuesta = JSON.parse('{ "cod":404, "state":"Not found"}')
+          res2.send(respuesta)
+        } else {
+          res2.send(res)
+        }
+      })
+      console.log('Conexion Exitosa')
+    })
+    return true
+  }
+  Insert(json2)
+})
+
 app.get('/InsertarUS', (req, res) => {
   var theUrl = url.parse(req.url)
   console.log(req.url)
