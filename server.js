@@ -23,8 +23,8 @@ const opts = { algorithms: ['RS256'] }
 
 // public key
 var public_key = '-----BEGIN PUBLIC KEY-----\n' +
-                        'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBANH6lGLWVF9+Sj9HENNUu0n56uTQidbz\n' +
-                        'nCOJiGuj+GfzGJuAE6j7NODbitnk7v/r3GLYidcwB/gI3u4wuWEdwoMCAwEAAQ==\n' +
+                        'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAOp7P/J9U+6VN+BQDcIWyzvMPVnqmRz5\n' +
+                        'z6HNUfcDOsSEk2egtxuBBgAF75OlLxMXi/KyNlb5sNy5qIxrTEv8IYMCAwEAAQ==\n' +
                         '-----END PUBLIC KEY-----\n'
 
 app.get('/', (req, res) => {
