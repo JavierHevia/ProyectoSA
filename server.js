@@ -199,9 +199,8 @@ app.get('/Vehiculo', (req, res2) => {
   var autorizacion = false
   jwt.verify(theUrl.query.jwt, public_key, opts, function (err, decoded) {
     if (err) {
-      res2.writeHead(403, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
-      res2.write(JSON.stringify({ err: 'El JWT no es vĂ¡lido o no contiene el scope de este servicio' }))
-      res2.end()
+      var respuesta = JSON.parse('{ "cod":403, "err":"El JWT no es valido o no contiene el scope de este servicio"}')
+      res2.send(respuesta)
     } else {
       const scope = JSON.parse(decoded.scope)
       // EJEMPLO DE COMO LEER EL SCOPE
@@ -278,8 +277,10 @@ app.get('/Vehiculo', (req, res2) => {
     }
     Insert(json2)
   } else {
-    var respuesta = JSON.parse('{ "cod":403, "state":"El JWT no es válido"}')
-    res2.send(respuesta)
+    // var respuesta2 = JSON.parse('{ "cod":403, "state":"El JWT no es válido"}')
+    // res2.send(respuesta2)
+    // res2.send(respuesta)
+    // res2.render('error', { error: 'malo' })
   }
 })
 
