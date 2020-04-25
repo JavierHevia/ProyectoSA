@@ -199,9 +199,9 @@ app.get('/Vehiculo', (req, res2) => {
   var autorizacion = false
   jwt.verify(theUrl.query.jwt, public_key, opts, function (err, decoded) {
     if (err) {
-      res.writeHead(403, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
-      res.write(JSON.stringify({ err: 'El JWT no es vĂ¡lido o no contiene el scope de este servicio' }))
-      res.end()
+      res2.writeHead(403, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
+      res2.write(JSON.stringify({ err: 'El JWT no es vĂ¡lido o no contiene el scope de este servicio' }))
+      res2.end()
     } else {
       const scope = JSON.parse(decoded.scope)
       // EJEMPLO DE COMO LEER EL SCOPE

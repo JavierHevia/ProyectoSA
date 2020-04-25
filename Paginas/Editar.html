@@ -51,10 +51,12 @@
    
    function prueba(){
 		
+		var param = 'jwt='+'lala';
+		
 		var xhttp = new XMLHttpRequest();
-		//xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo", true); 
-		xhttp.open("GET", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo", true); 
-		//xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo", true);  
+		xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo?"+param, true); 
+		//xhttp.open("GET", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?", true); 
+		 
 		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhttp.onreadystatechange = function() {
 		   if (this.readyState == 4 && this.status == 200) {
@@ -133,7 +135,8 @@
 			param += 'estado='+Estado+'&';
 			param += 'afiliado_adjudicado='+Afiliado+'&';
 			param += 'valor_adjudicado='+Valor_adjudicado;
-			;
+			param += 'jwt='+'a';
+			
 		}
 			
 			var xhttp = new XMLHttpRequest();
