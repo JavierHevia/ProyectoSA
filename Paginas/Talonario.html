@@ -57,9 +57,9 @@
 	 function prueba(){
 		
 		var xhttp = new XMLHttpRequest();  
-		//xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo", true);            // url: 'http://127.0.0.1:7070/Vehiculo',   
+		xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo", true);            // url: 'http://127.0.0.1:7070/Vehiculo',   
 		//xhttp.open("GET", "http://35.237.64.172:49160/Vehiculo", true);       // https://proyectosa-aemymiaoda-uc.a.run.app/quien
-		xhttp.open("GET", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo", true);    
+		//xhttp.open("GET", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo", true);    
 		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhttp.onreadystatechange = function() {
 		   if (this.readyState == 4 && this.status == 200) {
@@ -330,7 +330,7 @@
 		
 		$.ajax({
 					type: 'GET',
-					url: 'http://35.237.64.172:49160/Estado?'+params,
+					url: 'http://35.237.64.172:49160/Estado?'+params, 
 					//url: 'http://127.0.0.1:7070/Estado?'+params,
 					//data: {
 					//	jsonData: envjson

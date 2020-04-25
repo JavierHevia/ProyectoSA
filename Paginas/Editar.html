@@ -53,7 +53,7 @@
 		
 		var xhttp = new XMLHttpRequest();
 		//xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo", true); 
-		xhttp.open("GET", "http://35.237.64.172:49160/Vehiculo", true); 
+		xhttp.open("GET", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo", true); 
 		//xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo", true);  
 		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhttp.onreadystatechange = function() {
@@ -138,7 +138,8 @@
 			
 			var xhttp = new XMLHttpRequest();
 			//xhttp.open("PUT", "http://127.0.0.1:7070/Vehiculo?"+param, true); 
-			xhttp.open("PUT", "http://35.237.64.172:49160/Vehiculo?"+param, true); 
+			xhttp.open("PUT", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?"+param, true);
+			
 			xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			xhttp.onreadystatechange = function() {
 			   if (this.readyState == 4 && this.status == 200) {
@@ -154,13 +155,6 @@
 			   }		
 			};
 			
-			var data = {_id: id2,
-					estado: Estado, 
-					afiliado_adjudicado: Afiliado,
-					valor_adjudicado: Valor_adjudicado,
-			};
-			
-			//xhttp.send(JSON.stringify(data));
 			xhttp.send();
 		alert("Enviado Correctamente") 
 	  }
