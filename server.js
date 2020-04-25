@@ -3,8 +3,8 @@
 const express = require('express')
 
 // Constants
-const PORT = 8080
-const HOST = '0.0.0.0'
+const PORT = 7070
+const HOST = '127.0.0.1'
 
 // const PORT = 8080       // DATOS PARA EL SEVIDOR
 // const HOST = '0.0.0.0'
@@ -48,12 +48,12 @@ app.get('/quien', (req, res) => {
 app.use(express.json())
 app.post('/Login', (req, res2) => {
   // var theUrl = url.parse(req.url)
-  console.log(req.url)
-  console.log(req.body)
-
+  var theUrl = url.parse(req.url, true)
+  // console.log(theUrl.query.correa)
+  // console.log(theUrl.query.contrasena)
   var json2 = {
-    correa: req.body.correa,
-    contrasena: req.body.contrasena
+    correa: theUrl.query.correa,
+    contrasena: theUrl.query.contrasena
   }
 
   var MongoClient = require('mongodb').MongoClient
