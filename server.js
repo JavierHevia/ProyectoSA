@@ -23,9 +23,9 @@ const opts = { algorithms: ['RS256'] }
 
 // public key
 var public_key = '-----BEGIN PUBLIC KEY-----\n' +
-                        'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAOp7P/J9U+6VN+BQDcIWyzvMPVnqmRz5\n' +
-                        'z6HNUfcDOsSEk2egtxuBBgAF75OlLxMXi/KyNlb5sNy5qIxrTEv8IYMCAwEAAQ==\n' +
-                        '-----END PUBLIC KEY-----\n'
+  'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAOp7P/J9U+6VN+BQDcIWyzvMPVnqmRz5\n' +
+  'z6HNUfcDOsSEk2egtxuBBgAF75OlLxMXi/KyNlb5sNy5qIxrTEv8IYMCAwEAAQ==\n' +
+  '-----END PUBLIC KEY-----\n'
 
 app.get('/', (req, res) => {
   res.send('Hello World8')
@@ -36,7 +36,7 @@ app.get('/quien', (req, res) => {
   var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
   var myobj = { _id: '69', address: 'desDocker' }
 
-  function Insert (myobj) {
+  function Insert(myobj) {
     MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
       if (err) throw err
       var dbo = client.db('Base1') // .collection('Base1')
@@ -69,7 +69,7 @@ app.post('/Login', (req, res2) => {
   var MongoClient = require('mongodb').MongoClient
   var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
 
-  function Insert (json) {
+  function Insert(json) {
     MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
       if (err) throw err
       var dbo = client.db('Base1') // .collection('Base1')
@@ -114,7 +114,7 @@ app.get('/InsertarUS', (req, res) => {
   var MongoClient = require('mongodb').MongoClient
   var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
 
-  function Insert (json) {
+  function Insert(json) {
     MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
       if (err) throw err
       var dbo = client.db('Base1') // .collection('Base1')
@@ -157,7 +157,7 @@ app.post('/InsertarAUTO', (req, res) => {
   var MongoClient = require('mongodb').MongoClient
   var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
 
-  function Insert (json) {
+  function Insert(json) {
     MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
       if (err) throw err
       var dbo = client.db('Base1') // .collection('Base1')
@@ -178,7 +178,7 @@ app.post('/InsertarAUTO', (req, res) => {
 app.get('/FindAutoAll', (req, res2) => {
   var MongoClient = require('mongodb').MongoClient
   var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
-  function buscar (json) {
+  function buscar(json) {
     MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
       if (err) throw err
       var dbo = client.db('Base1')
@@ -245,7 +245,7 @@ app.get('/Vehiculo', (req, res2) => {
     var MongoClient = require('mongodb').MongoClient
     var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
 
-    function Insert (json) {
+    function Insert(json) {
       MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
         if (err) throw err
         var dbo = client.db('Base1') // .collection('Base1')
@@ -276,152 +276,204 @@ app.get('/Vehiculo', (req, res2) => {
       return true
     }
     Insert(json2)
-  } else {
-    // var respuesta2 = JSON.parse('{ "cod":403, "state":"El JWT no es válido"}')
-    // res2.send(respuesta2)
-    // res2.send(respuesta)
-    // res2.render('error', { error: 'malo' })
   }
 })
 
 app.get('/Foto', (req, res2) => {
   // console.log(req.body)
   var theUrl = url.parse(req.url, true)
+  var autorizacion = false
+  jwt.verify(theUrl.query.jwt, public_key, opts, function (err, decoded) {
+    if (err) {
+      var respuesta = JSON.parse('{ "cod":403, "err":"El JWT no es valido o no contiene el scope de este servicio"}')
+      res2.send(respuesta)
+    } else {
+      const scope = JSON.parse(decoded.scope)
+      // EJEMPLO DE COMO LEER EL SCOPE
+      let access = ''
+      access = scope.find(element => element.toLowerCase() == 'vehiculo.get')
+
+      if (access != undefined) {
+        // SI TIENE ACCESO
+        autorizacion = true
+      }
+    }
+  })
   // console.log(req.url)
   // console.log(theUrl.query)
-  var json2 = null
-  if (theUrl.query == null) {
-    json2 = ''
-  } else {
-    var qdata = theUrl.query
-    // console.log(qdata._id)
-    if (qdata._id !== undefined) {
-      // console.log('si')
-      var parajson = '{' + '\"_id\":' + qdata._id + '}'
-      json2 = JSON.parse(parajson)
+  if (autorizacion) {
+    var json2 = null
+    if (theUrl.query == null) {
+      json2 = ''
+    } else {
+      var qdata = theUrl.query
+      // console.log(qdata._id)
+      if (qdata._id !== undefined) {
+        // console.log('si')
+        var parajson = '{' + '\"_id\":' + qdata._id + '}'
+        json2 = JSON.parse(parajson)
+      }
     }
-  }
-  // var queryObj = queryString.parse(theUrl.query)
-  // // console.log(queryObj)
-  // var json2 = JSON.parse(queryObj.jsonData)
-  // console.log(json2)
+    // var queryObj = queryString.parse(theUrl.query)
+    // // console.log(queryObj)
+    // var json2 = JSON.parse(queryObj.jsonData)
+    // console.log(json2)
 
-  var MongoClient = require('mongodb').MongoClient
-  var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
+    var MongoClient = require('mongodb').MongoClient
+    var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
 
-  function Insert (json) {
-    MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
-      if (err) throw err
-      var dbo = client.db('Base1') // .collection('Base1')
-      dbo.collection('Inventario').find(json).toArray(function (err, res) {
+    function Insert(json) {
+      MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
         if (err) throw err
-        console.log('Dato Encontrado Correctamente')
-        // console.log(res)
-        client.close()
-        if (res.length === 0) {
-          var respuesta = JSON.parse('{ "cod":404, "state":"Not found"}')
-          res2.send(respuesta)
-        } else {
-          res2.send(res)
-        }
+        var dbo = client.db('Base1') // .collection('Base1')
+        dbo.collection('Inventario').find(json).toArray(function (err, res) {
+          if (err) throw err
+          console.log('Dato Encontrado Correctamente')
+          // console.log(res)
+          client.close()
+          if (res.length === 0) {
+            var respuesta = JSON.parse('{ "cod":404, "state":"Not found"}')
+            res2.send(respuesta)
+          } else {
+            res2.send(res)
+          }
+        })
       })
-    })
-    return true
+      return true
+    }
+    Insert(json2)
   }
-  Insert(json2)
 })
 
 app.get('/Estado', (req, res2) => {
   // console.log(req.body)
   var theUrl = url.parse(req.url, true)
-  var json2 = null
-  if (theUrl.query == null) {
-    json2 = ''
-  } else {
-    var qdata = theUrl.query
-    // console.log(qdata._id)
-    if (qdata._id !== undefined) {
-      // console.log('si')
-      var parajson = '{' + '\"_id\":' + qdata._id + '}'
-      json2 = JSON.parse(parajson)
+  var autorizacion = false
+  jwt.verify(theUrl.query.jwt, public_key, opts, function (err, decoded) {
+    if (err) {
+      var respuesta = JSON.parse('{ "cod":403, "err":"El JWT no es valido o no contiene el scope de este servicio"}')
+      res2.send(respuesta)
+    } else {
+      const scope = JSON.parse(decoded.scope)
+      // EJEMPLO DE COMO LEER EL SCOPE
+      let access = ''
+      access = scope.find(element => element.toLowerCase() == 'vehiculo.get')
+
+      if (access != undefined) {
+        // SI TIENE ACCESO
+        autorizacion = true
+      }
     }
-  }
-  // console.log(req.url)
-  // var queryObj = queryString.parse(theUrl.query)
-  // // console.log(queryObj)
-  // var json2 = JSON.parse(queryObj.jsonData)
-  // console.log(json2)
+  })
+  if (autorizacion) {
+    var json2 = null
+    if (theUrl.query == null) {
+      json2 = ''
+    } else {
+      var qdata = theUrl.query
+      // console.log(qdata._id)
+      if (qdata._id !== undefined) {
+        // console.log('si')
+        var parajson = '{' + '\"_id\":' + qdata._id + '}'
+        json2 = JSON.parse(parajson)
+      }
+    }
+    // console.log(req.url)
+    // var queryObj = queryString.parse(theUrl.query)
+    // // console.log(queryObj)
+    // var json2 = JSON.parse(queryObj.jsonData)
+    // console.log(json2)
 
-  var MongoClient = require('mongodb').MongoClient
-  var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
+    var MongoClient = require('mongodb').MongoClient
+    var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
 
-  function Insert (json) {
-    MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
-      if (err) throw err
-      var dbo = client.db('Base1') // .collection('Base1')
-      dbo.collection('Inventario').find(json).toArray(function (err, res) {
+    function Insert(json) {
+      MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
         if (err) throw err
-        console.log('Dato Encontrado Correctamente')
-        // console.log(res)
-        client.close()
-        if (res.length === 0) {
-          var respuesta = JSON.parse('{ "cod":404, "state":"Not found"}')
-          res2.send(respuesta)
-        } else {
-          res2.send(res)
-        }
+        var dbo = client.db('Base1') // .collection('Base1')
+        dbo.collection('Inventario').find(json).toArray(function (err, res) {
+          if (err) throw err
+          console.log('Dato Encontrado Correctamente')
+          // console.log(res)
+          client.close()
+          if (res.length === 0) {
+            var respuesta = JSON.parse('{ "cod":404, "state":"Not found"}')
+            res2.send(respuesta)
+          } else {
+            res2.send(res)
+          }
+        })
       })
-    })
-    return true
+      return true
+    }
+    Insert(json2)
   }
-  Insert(json2)
 })
 
 app.put('/Vehiculo', (req, res2) => {
   // console.log(req.body)
   var theUrl = url.parse(req.url, true)
-  console.log(theUrl.query)
+  var autorizacion = false
+  jwt.verify(theUrl.query.jwt, public_key, opts, function (err, decoded) {
+    if (err) {
+      var respuesta = JSON.parse('{ "cod":403, "err":"El JWT no es valido o no contiene el scope de este servicio"}')
+      res2.send(respuesta)
+    } else {
+      const scope = JSON.parse(decoded.scope)
+      // EJEMPLO DE COMO LEER EL SCOPE
+      let access = ''
+      access = scope.find(element => element.toLowerCase() == 'vehiculo.get')
 
-  var anews = parseInt(theUrl.query._id)
-  var datoid = { _id: anews }
-  console.log(datoid)
-  // var newdato = '$set: { \"estado\":' + '\"' + req.body.estado + '\"' + ', \"afiliado\":' + '\"' + req.body.afiliado_adjudicado + '\"' + ', \"valor_adjudicado\":' + '\"' + req.body.valor_adjudicado + '\"' + '}'
-  var newdato = { $set: { estado: theUrl.query.estado, afiliado: theUrl.query.afiliado_adjudicado, valor_adjudicado: theUrl.query.valor_adjudicado } }
-  console.log(newdato)
+      if (access != undefined) {
+        // SI TIENE ACCESO
+        autorizacion = true
+      }
+    }
+  })
+  if (autorizacion) {
+    console.log(theUrl.query)
 
-  var MongoClient = require('mongodb').MongoClient
-  var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
+    var anews = parseInt(theUrl.query._id)
+    var datoid = { _id: anews }
+    console.log(datoid)
+    // var newdato = '$set: { \"estado\":' + '\"' + req.body.estado + '\"' + ', \"afiliado\":' + '\"' + req.body.afiliado_adjudicado + '\"' + ', \"valor_adjudicado\":' + '\"' + req.body.valor_adjudicado + '\"' + '}'
+    var newdato = { $set: { estado: theUrl.query.estado, afiliado: theUrl.query.afiliado_adjudicado, valor_adjudicado: theUrl.query.valor_adjudicado } }
+    console.log(newdato)
 
-  function update (obj1, newdato) {
-    MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
-      if (err) throw err
-      var dbo = client.db('Base1') // .collection('Base1')
+    var MongoClient = require('mongodb').MongoClient
+    var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
 
-      dbo.collection('Inventario').find(obj1).toArray(function (err, res) {
+    function update(obj1, newdato) {
+      MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
         if (err) throw err
-        // console.log('Dato Encontrado Correctamente')
-        console.log(res)
-        // client.close()
-        if (res.length === 0) {
-          var respuesta = JSON.parse('{ "cod":404, "state":"Not found"}')
-          res2.send(respuesta)
-          // console.log('vacio')
-        } else {
-          dbo.collection('Inventario').updateOne(obj1, newdato, function (err, res) {
-            if (err) throw err
-            console.log('Dato Encontrado Correctamente')
-            // console.log(res)
-            client.close()
-            var respuesta = JSON.parse('{ "cod":201, "state":"Created"}')
+        var dbo = client.db('Base1') // .collection('Base1')
+
+        dbo.collection('Inventario').find(obj1).toArray(function (err, res) {
+          if (err) throw err
+          // console.log('Dato Encontrado Correctamente')
+          console.log(res)
+          // client.close()
+          if (res.length === 0) {
+            var respuesta = JSON.parse('{ "cod":404, "state":"Not found"}')
             res2.send(respuesta)
-          })
-          console.log('Conexion Exitosa')
-        }
+            // console.log('vacio')
+          } else {
+            dbo.collection('Inventario').updateOne(obj1, newdato, function (err, res) {
+              if (err) throw err
+              console.log('Dato Encontrado Correctamente')
+              // console.log(res)
+              client.close()
+              var respuesta = JSON.parse('{ "cod":201, "state":"Created"}')
+              res2.send(respuesta)
+            })
+            console.log('Conexion Exitosa')
+          }
+        })
       })
-    })
-    return true
+      return true
+    }
+    update(datoid, newdato)
   }
-  update(datoid, newdato)
 })
 
 app.listen(PORT, HOST)
