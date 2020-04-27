@@ -55,17 +55,18 @@
    <script> 
 
 	 function prueba(){
-		
+		var params = 'jwt=ja.eyJzY29wZSI6WyJ2ZWhpY3Vsby5nZXQiLCJmb3RvLmdldCIsImxpc3RhZG8uZ2V0IiwiYWZpbGlhZG8ucHV0IiwicGFnby5wb3N0Il0sImV4cCI6MTU4Nzc1MDMxMywiaWF0IjoxNTg3NzQ2NzEzLCJjbGllbnRfaWQiOiI5OTk4ODg3Nzc2NjY1NTU0NDQifQ.ptv_IEJWdpi7TuaAP2WNrS-V-Xk4aBTHJ6IPCES2ZktIvEiX9nuWwoHOP3munGz1I6k825yXZNFmthr9mtTKTg'
 		var xhttp = new XMLHttpRequest();  
-		//xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo", true);            // url: 'http://127.0.0.1:7070/Vehiculo',   
+		xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo?"+params, true);            // url: 'http://127.0.0.1:7070/Vehiculo',   
 		//xhttp.open("GET", "http://35.237.64.172:49160/Vehiculo", true);       // https://proyectosa-aemymiaoda-uc.a.run.app/quien
-		xhttp.open("GET", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo", true);    
+		//var params = 'jwt=ja.eyJzY29wZSI6WyJ2ZWhpY3Vsby5nZXQiLCJmb3RvLmdldCIsImxpc3RhZG8uZ2V0IiwiYWZpbGlhZG8ucHV0IiwicGFnby5wb3N0Il0sImV4cCI6MTU4Nzc1MDMxMywiaWF0IjoxNTg3NzQ2NzEzLCJjbGllbnRfaWQiOiI5OTk4ODg3Nzc2NjY1NTU0NDQifQ.ptv_IEJWdpi7TuaAP2WNrS-V-Xk4aBTHJ6IPCES2ZktIvEiX9nuWwoHOP3munGz1I6k825yXZNFmthr9mtTKTg'
+		//xhttp.open("GET", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?"+params, true);    
 		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhttp.onreadystatechange = function() {
 		   if (this.readyState == 4 && this.status == 200) {
 			 // Response
 			 var response = this.responseText;
-			
+			 alert(response)
 			 var obj = JSON.parse(response);
 			 //alert(obj)
 			 //alert(obj[0]._id)
