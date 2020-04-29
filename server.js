@@ -36,7 +36,7 @@ app.get('/quien', (req, res) => {
   var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
   var myobj = { _id: '69', address: 'desDocker' }
 
-  function Insert(myobj) {
+  function Insert (myobj) {
     MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
       if (err) throw err
       var dbo = client.db('Base1') // .collection('Base1')
@@ -60,16 +60,18 @@ app.post('/Login', (req, res2) => {
   // var theUrl = url.parse(req.url)
   var theUrl = url.parse(req.url, true)
   // console.log(theUrl.query.correa)
-  // console.log(theUrl.query.contrasena)
+  // console.log(theUrl.query.tipo)
+  var tip = parseInt(theUrl.query.tipo)
   var json2 = {
     correa: theUrl.query.correa,
-    contrasena: theUrl.query.contrasena
+    contrasena: theUrl.query.contrasena,
+    tipo: tip
   }
-
+  console.log(json2)
   var MongoClient = require('mongodb').MongoClient
   var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
 
-  function Insert(json) {
+  function Insert (json) {
     MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
       if (err) throw err
       var dbo = client.db('Base1') // .collection('Base1')
@@ -87,34 +89,30 @@ app.post('/Login', (req, res2) => {
       })
       console.log('Conexion Exitosa')
     })
-    return true
+    return false
   }
   Insert(json2)
 })
 
 app.get('/InsertarUS', (req, res) => {
-  var theUrl = url.parse(req.url)
-  console.log(req.url)
-  var queryObj = queryString.parse(theUrl.query)
-  console.log(queryObj)
-  var obj = JSON.parse(queryObj.jsonData)
-  console.log(theUrl)
-
+  console.log(req.body)
+  var tip = parseInt(req.body.tipo)
   var json2 = {
     _id: Math.floor(Math.random() * (999 - 1)) + 1,
-    nombre: obj.nombre,
-    apellido: obj.apellido,
-    direccion: obj.direccion,
-    correa: obj.correa,
-    contrasena: obj.contrasena,
-    nocelular: obj.nocelular,
-    dpi: obj.dpi
+    nombre: req.body.nombre,
+    apellido: req.body.apellido,
+    direccion: req.body.direccion,
+    correa: req.body.correa,
+    contrasena: req.body.contrasena,
+    nocelular: req.body.nocelular,
+    dpi: req.body.dpi,
+    tipo: tip
   }
 
   var MongoClient = require('mongodb').MongoClient
   var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
 
-  function Insert(json) {
+  function Insert (json) {
     MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
       if (err) throw err
       var dbo = client.db('Base1') // .collection('Base1')
@@ -122,6 +120,43 @@ app.get('/InsertarUS', (req, res) => {
         if (err) throw err
         console.log('Dato Insertado Correctamente')
         client.close()
+        res.send('Cliente Insertado Correctamente')
+        return true
+      })
+      console.log('Conexion Exitosa')
+    })
+    return false
+  }
+
+  Insert(json2)
+})
+
+app.post('/InsertarAJ', (req, res) => {
+  console.log(req.body)
+  var tip = parseInt(req.body.tipo)
+  var json2 = {
+    _id: Math.floor(Math.random() * (999 - 1)) + 1,
+    nombre: req.body.nombre,
+    apellido: req.body.apellido,
+    direccion: req.body.direccion,
+    correa: req.body.correa,
+    contrasena: req.body.contrasena,
+    nocelular: req.body.nocelular,
+    dpi: req.body.dpi,
+    tipo: tip
+  }
+  var MongoClient = require('mongodb').MongoClient
+  var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
+
+  function Insert (json) {
+    MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
+      if (err) throw err
+      var dbo = client.db('Base1') // .collection('Base1')
+      dbo.collection('Usuario').insertOne(json, function (err, _res) {
+        if (err) throw err
+        console.log('Dato Insertado Correctamente')
+        client.close()
+        res.send('Ajustador Insertado Correctamente')
         return true
       })
       console.log('Conexion Exitosa')
@@ -136,9 +171,11 @@ app.use(express.json())
 app.post('/InsertarAUTO', (req, res) => {
   // console.log(req.body)
   // console.log(req.body.name)
+  var estain = parseInt(req.body.estado) 
+  var subastable2 = parseInt(req.body.subastable) 
   var json2 = {
     _id: Math.floor(Math.random() * (999 - 1)) + 1,
-    estado: req.body.estado,
+    estado: estain,
     tipo: req.body.tipo,
     marca: req.body.marca,
     linea: req.body.linea,
@@ -151,13 +188,14 @@ app.post('/InsertarAUTO', (req, res) => {
     garantiaInspeccion: req.body.garantiaInspeccion,
     inundado: req.body.inundado,
     colision: req.body.colision,
-    foto: req.body.foto
+    foto: req.body.foto,
+    subastable: subastable2
   }
 
   var MongoClient = require('mongodb').MongoClient
   var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
 
-  function Insert(json) {
+  function Insert (json) {
     MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
       if (err) throw err
       var dbo = client.db('Base1') // .collection('Base1')
@@ -178,7 +216,7 @@ app.post('/InsertarAUTO', (req, res) => {
 app.get('/FindAutoAll', (req, res2) => {
   var MongoClient = require('mongodb').MongoClient
   var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
-  function buscar(json) {
+  function buscar (json) {
     MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
       if (err) throw err
       var dbo = client.db('Base1')
@@ -235,7 +273,8 @@ app.get('/Vehiculo', (req, res2) => {
         json2 = JSON.parse(parajson)
         // console.log(json2)
       } else if (qdata.estado !== undefined) {
-        var parajson = '{' + '\"estado\":' + qdata.estado + '}'
+        var stain = parseInt(qdata.estado) 
+        var parajson = '{' + '\"estado\":' + stain + '}'
         json2 = JSON.parse(parajson)
         // console.log(json2)
       }
@@ -245,7 +284,7 @@ app.get('/Vehiculo', (req, res2) => {
     var MongoClient = require('mongodb').MongoClient
     var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
 
-    function Insert(json) {
+    function Insert (json) {
       MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
         if (err) throw err
         var dbo = client.db('Base1') // .collection('Base1')
@@ -256,7 +295,8 @@ app.get('/Vehiculo', (req, res2) => {
             console.log('Dato Encontrado Correctamente')
             // console.log(res)
             client.close()
-            res2.send(res)
+            var resull = { response: res}
+            res2.send(resull)
           })
         } else {
           dbo.collection('Inventario').find(json).toArray(function (err, res) {
@@ -268,7 +308,9 @@ app.get('/Vehiculo', (req, res2) => {
               var respuesta = JSON.parse('{ "cod":404, "state":"Not found"}')
               res2.send(respuesta)
             } else {
-              res2.send(res)
+              var resull = { response: res}
+              res2.send(resull)
+              // res2.send(res)
             }
           })
         }
@@ -309,8 +351,9 @@ app.get('/Foto', (req, res2) => {
       var qdata = theUrl.query
       // console.log(qdata._id)
       if (qdata._id !== undefined) {
+        var pp = parseInt(qdata._id)
         // console.log('si')
-        var parajson = '{' + '\"_id\":' + qdata._id + '}'
+        var parajson = '{' + '\"_id\":' + pp + '}'
         json2 = JSON.parse(parajson)
       }
     }
@@ -322,7 +365,7 @@ app.get('/Foto', (req, res2) => {
     var MongoClient = require('mongodb').MongoClient
     var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
 
-    function Insert(json) {
+    function Insert (json) {
       MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
         if (err) throw err
         var dbo = client.db('Base1') // .collection('Base1')
@@ -335,7 +378,9 @@ app.get('/Foto', (req, res2) => {
             var respuesta = JSON.parse('{ "cod":404, "state":"Not found"}')
             res2.send(respuesta)
           } else {
-            res2.send(res)
+            var resull = { response: res}
+              res2.send(resull)
+            // res2.send(res)
           }
         })
       })
@@ -365,6 +410,7 @@ app.get('/Estado', (req, res2) => {
       }
     }
   })
+
   if (autorizacion) {
     var json2 = null
     if (theUrl.query == null) {
@@ -372,9 +418,10 @@ app.get('/Estado', (req, res2) => {
     } else {
       var qdata = theUrl.query
       // console.log(qdata._id)
-      if (qdata._id !== undefined) {
+      if (qdata.estado !== undefined) {
         // console.log('si')
-        var parajson = '{' + '\"_id\":' + qdata._id + '}'
+        var pp = parseInt(qdata.estado)
+        var parajson = '{' + '\"estado\":' + pp + '}'
         json2 = JSON.parse(parajson)
       }
     }
@@ -387,7 +434,7 @@ app.get('/Estado', (req, res2) => {
     var MongoClient = require('mongodb').MongoClient
     var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
 
-    function Insert(json) {
+    function Insert (json) {
       MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
         if (err) throw err
         var dbo = client.db('Base1') // .collection('Base1')
@@ -400,7 +447,9 @@ app.get('/Estado', (req, res2) => {
             var respuesta = JSON.parse('{ "cod":404, "state":"Not found"}')
             res2.send(respuesta)
           } else {
-            res2.send(res)
+            var resull = { response: res}
+              res2.send(resull)
+            // res2.send(res)
           }
         })
       })
@@ -443,7 +492,7 @@ app.put('/Vehiculo', (req, res2) => {
     var MongoClient = require('mongodb').MongoClient
     var uri = 'mongodb://admin1:admin@cluster0-shard-00-00-k6sn1.mongodb.net:27017,cluster0-shard-00-01-k6sn1.mongodb.net:27017,cluster0-shard-00-02-k6sn1.mongodb.net:27017/Base1?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
 
-    function update(obj1, newdato) {
+    function update (obj1, newdato) {
       MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, client) {
         if (err) throw err
         var dbo = client.db('Base1') // .collection('Base1')
@@ -463,8 +512,9 @@ app.put('/Vehiculo', (req, res2) => {
               console.log('Dato Encontrado Correctamente')
               // console.log(res)
               client.close()
-              var respuesta = JSON.parse('{ "cod":201, "state":"Created"}')
-              res2.send(respuesta)
+              //var respuesta = JSON.parse('{ "cod":201, "state":"Created"}')
+              var resull = { response: true}
+              res2.send(resull)
             })
             console.log('Conexion Exitosa')
           }

@@ -55,12 +55,12 @@
    <script> 
 
 	 function prueba(){
-		var params = 'jwt=ja.eyJzY29wZSI6WyJ2ZWhpY3Vsby5nZXQiLCJmb3RvLmdldCIsImxpc3RhZG8uZ2V0IiwiYWZpbGlhZG8ucHV0IiwicGFnby5wb3N0Il0sImV4cCI6MTU4Nzc1MDMxMywiaWF0IjoxNTg3NzQ2NzEzLCJjbGllbnRfaWQiOiI5OTk4ODg3Nzc2NjY1NTU0NDQifQ.ptv_IEJWdpi7TuaAP2WNrS-V-Xk4aBTHJ6IPCES2ZktIvEiX9nuWwoHOP3munGz1I6k825yXZNFmthr9mtTKTg'
+		//var params = 'jwt=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJpbnYwMSIsInNjb3BlIjoiW1widmVoaWN1bG8uZ2V0XCIsIFwiZm90by5nZXRcIiwgXCJlc3RhZG8uZ2V0XCIsIFwidmVoaWN1bG8ucHV0XCJdIiwiZXhwIjoxNTg4MDQwMjE5LCJpYXQiOjE1ODgwMzY2MTl9.LrxF1-wS129IMl9v7kbdyOZUuhO-bRnS5Ev6gOfL9msBnfBG7L-JCTaT7-USzoQr16UrnH-Xk0v2YkPcgDLUfQ'
+		
 		var xhttp = new XMLHttpRequest();  
-		xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo?"+params, true);            // url: 'http://127.0.0.1:7070/Vehiculo',   
-		//xhttp.open("GET", "http://35.237.64.172:49160/Vehiculo", true);       // https://proyectosa-aemymiaoda-uc.a.run.app/quien
-		//var params = 'jwt=ja.eyJzY29wZSI6WyJ2ZWhpY3Vsby5nZXQiLCJmb3RvLmdldCIsImxpc3RhZG8uZ2V0IiwiYWZpbGlhZG8ucHV0IiwicGFnby5wb3N0Il0sImV4cCI6MTU4Nzc1MDMxMywiaWF0IjoxNTg3NzQ2NzEzLCJjbGllbnRfaWQiOiI5OTk4ODg3Nzc2NjY1NTU0NDQifQ.ptv_IEJWdpi7TuaAP2WNrS-V-Xk4aBTHJ6IPCES2ZktIvEiX9nuWwoHOP3munGz1I6k825yXZNFmthr9mtTKTg'
-		//xhttp.open("GET", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?"+params, true);    
+		//xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo"+, true);              
+	
+		xhttp.open("GET", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo", true);    
 		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhttp.onreadystatechange = function() {
 		   if (this.readyState == 4 && this.status == 200) {
@@ -86,23 +86,23 @@
 								   +' <td><strong>Colision</strong></td> '
 								   +' <td><strong>Imagen</strong></td> '
 								   +'</tr>'
-			for (i = 0; i < obj.length; i++) { //obj[i].foto
+			for (i = 0; i < obj.response.length; i++) { //obj[i].foto
 			 
-				tablea += '<tr>' + '<td>' +obj[i]._id+'</td>' 
-								+ '<td>' +obj[i].estado+'</td>' 
-								+ '<td>' +obj[i].tipo+'</td>' 
-								+ '<td>' +obj[i].marca+'</td>' 
-								+ '<td>' +obj[i].linea+'</td>' 
-								+ '<td>' +obj[i].modelo+'</td>' 
-								+ '<td>' +obj[i].placa+'</td>' 
-								+ '<td>' +obj[i].color+'</td>'
-							    + '<td>' +obj[i].arranca+'</td>'
-								+ '<td>' +obj[i].camina+'</td>'
-								+ '<td>' +obj[i].fallaMecanica+'</td>'
-								+ '<td>' +obj[i].garantiaInspeccion+'</td>'
-								+ '<td>' +obj[i].inundado+'</td>'
-								tablea += '<td>' +obj[i].colision+'</td>';
-								var fotos = obj[i].foto;
+				tablea += '<tr>' + '<td>' +obj.response[i]._id+'</td>' 
+								+ '<td>' +obj.response[i].estado+'</td>' 
+								+ '<td>' +obj.response[i].tipo+'</td>' 
+								+ '<td>' +obj.response[i].marca+'</td>' 
+								+ '<td>' +obj.response[i].linea+'</td>' 
+								+ '<td>' +obj.response[i].modelo+'</td>' 
+								+ '<td>' +obj.response[i].placa+'</td>' 
+								+ '<td>' +obj.response[i].color+'</td>'
+							    + '<td>' +obj.response[i].arranca+'</td>'
+								+ '<td>' +obj.response[i].camina+'</td>'
+								+ '<td>' +obj.response[i].fallaMecanica+'</td>'
+								+ '<td>' +obj.response[i].garantiaInspeccion+'</td>'
+								+ '<td>' +obj.response[i].inundado+'</td>'
+								tablea += '<td>' +obj.response[i].colision+'</td>';
+								var fotos = obj.response[i].foto;
 								var res = fotos.split(",");
 
 								tablea += '<td>' +'<img src="./img/'+res[0]+'\" alt="" width="150" height="100" />'+'</td>';
@@ -129,7 +129,7 @@
             if(subastable[i].checked)
 				if (subastable[i].value=="TRUE"){
 					//resultadoarr="\""+"SUBASTABLE"+"\"";
-					resultadoarr="\""+3+"\"";
+					resultadoarr=3;
 				}
         }
 		
@@ -154,13 +154,11 @@
 			params = "estado="+resultadoarr;
 			
 		}
-
-		//xhttp.open("get", "http://127.0.0.1:7070/FindAuto", true); 
-	
+		
 		$.ajax({
 					type: 'GET',
-					url: 'http://35.237.64.172:49160/Vehiculo?'+params,
 					//url: 'http://127.0.0.1:7070/Vehiculo?'+params,
+					url: 'http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?'+params,
 					//data: {
 						//jsonData: envjson
 					//},
@@ -193,23 +191,23 @@
 								   +' <td><strong>Colision</strong></td> '
 								   +' <td><strong>Imagen</strong></td> '
 								   +'</tr>'
-			for (i = 0; i < response.length; i++) {
+			for (i = 0; i < response.response.length; i++) {
 			 
-				tablea += '<tr>' + '<td>' +response[i]._id+'</td>' 
-								+ '<td>' +response[i].estado+'</td>' 
-								+ '<td>' +response[i].tipo+'</td>' 
-								+ '<td>' +response[i].marca+'</td>' 
-								+ '<td>' +response[i].linea+'</td>' 
-								+ '<td>' +response[i].modelo+'</td>' 
-								+ '<td>' +response[i].placa+'</td>' 
-								+ '<td>' +response[i].color+'</td>'
-							    + '<td>' +response[i].arranca+'</td>'
-								+ '<td>' +response[i].camina+'</td>'
-								+ '<td>' +response[i].fallaMecanica+'</td>'
-								+ '<td>' +response[i].garantiaInspeccion+'</td>'
-								+ '<td>' +response[i].inundado+'</td>'
-								tablea += '<td>' +response[i].colision+'</td>';
-								var fotos = response[i].foto;
+				tablea += '<tr>' + '<td>' +response.response[i]._id+'</td>' 
+								+ '<td>' +response.response[i].estado+'</td>' 
+								+ '<td>' +response.response[i].tipo+'</td>' 
+								+ '<td>' +response.response[i].marca+'</td>' 
+								+ '<td>' +response.response[i].linea+'</td>' 
+								+ '<td>' +response.response[i].modelo+'</td>' 
+								+ '<td>' +response.response[i].placa+'</td>' 
+								+ '<td>' +response.response[i].color+'</td>'
+							    + '<td>' +response.response[i].arranca+'</td>'
+								+ '<td>' +response.response[i].camina+'</td>'
+								+ '<td>' +response.response[i].fallaMecanica+'</td>'
+								+ '<td>' +response.response[i].garantiaInspeccion+'</td>'
+								+ '<td>' +response.response[i].inundado+'</td>'
+								tablea += '<td>' +response.response[i].colision+'</td>';
+								var fotos = response.response[i].foto;
 								var res = fotos.split(",");
 
 								tablea += '<td>' +'<img src="./img/'+res[0]+'\" alt="" width="150" height="100" />'+'</td>';
@@ -250,19 +248,20 @@
 			alert('Debe de ingresar por lo menos un dato')
 			
 		}else if (resultadoarr == ''){
-			var pp = parseInt(id2)
+			//var pp = parseInt(id2)
 			envjson = "{ \"_id\":"+id2+"}";
-			params = "_id="+pp; 
+			params = "_id="+id2; 
 		
 		}else if (id2 != '' &&  resultadoarr != ''){
-			var pp = parseInt(id2)
+			//var pp = parseInt(id2)
 			envjson = "{ \"_id\":"+id2+"}";
-			params = "_id="+pp;
+			params = "_id="+id2;
 		}
+
 		
 		$.ajax({
 					type: 'GET',
-					url: 'http://35.237.64.172:49160/Foto?'+params,
+					url: 'http://proyectosa-aemymiaoda-uc.a.run.app/Foto?'+params,
 					//url: 'http://127.0.0.1:7070/Foto?'+params,
 					//data: {
 					//	jsonData: envjson
@@ -278,7 +277,7 @@
 							var respuesta = JSON.parse('{ "cod":200, "state":"OK"}')
 							alert(respuesta.cod + " " + respuesta.state);
 						}else if (response.cod === 404){
-							alert(response.cod + " " + response.state);
+							alert(response.response.cod + " " + response.response.state);
 						}
 						var tablea = "";
 						
@@ -286,14 +285,14 @@
 								   +' <td><strong>URL</strong></td> '
 								   +' <td><strong>Imagen</strong></td> ';
 								   
-					for (i = 0; i < response.length; i++) {
+					for (i = 0; i < response.response.length; i++) {
 					 
-						var fotos = response[i].foto;
+						var fotos = response.response[i].foto;
 						var res = fotos.split(",");
 						
 						for (o = 0; o < res.length; o++){
 						    
-							tablea += '<tr>' + '<td>' +response[i]._id+'</td>' 
+							tablea += '<tr>' + '<td>' +response.response[i]._id+'</td>' 
 							tablea += '<td>' +"./img/"+res[o]+'</td>'
 							tablea += '<td>'+'<img src="./img/'+res[o]+'\" alt="" width="600" height="300" />'+'</td>';
 							tablea += '</tr>' ;
@@ -325,14 +324,15 @@
 			alert('Debe de ingresar por lo menos un dato')
 		}else{
 			envjson = "{ \"_id\":"+id2+"}";	
-			var pp = parseInt(id2)
-			params = "_id="+pp; 
+			//var pp = parseInt(id2)
+			params = "estado="+id2; 
 		}
+		
 		
 		$.ajax({
 					type: 'GET',
-					url: 'http://35.237.64.172:49160/Estado?'+params, 
-					//url: 'http://127.0.0.1:7070/Estado?'+params,
+					//url: 'http://proyectosa-aemymiaoda-uc.a.run.app/Estado?'+params, 
+					url: 'http://127.0.0.1:7070/Estado?'+params,
 					//data: {
 					//	jsonData: envjson
 					//},
@@ -349,24 +349,23 @@
 						}else if (response.cod === 404){
 							alert(response.cod + " " + response.state);
 						}
+						else {
+							alert(response.cod + " " + response.state);
+						}
 						var tablea = "";
 						
 						var tablea = '<table  border="4">' + '<tr>' +' <td><strong>ID</strong></td> '
 								   +' <td><strong>Nombre</strong></td> '
 								   +' <td><strong>Subastable</strong></td> ';
 								   
-					for (i = 0; i < response.length; i++) {
+					for (i = 0; i < response.response.length; i++) {
 					 
-						var fotos = response[i].foto;
+						var fotos = response.response[i].foto;
 						var res = fotos.split(",");
 						    
-						tablea += '<tr>'+ '<td>' +response[i]._id+'</td>';
-						tablea += '<td>' +response[i].marca+'</td>'; 
-						if (response[i].estado == "SUBASTABLE"){
-							tablea += '<td>'+"TRUE" +'</td>';
-						}else {
-							tablea += '<td>'+"FALSE"+'</td>';
-						}
+						tablea += '<tr>'+ '<td>' +response.response[i].estado+'</td>';
+						tablea += '<td>' +response.response[i].marca+'</td>'; 
+						tablea += '<td>' +response.response[i].subastable+'</td>'; 
 						tablea += '</tr>';
 						
 					}

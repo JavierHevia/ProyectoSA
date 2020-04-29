@@ -18,8 +18,13 @@
   <form class="register">
 
     <input type="Correo" id="Correo" class="register-input" placeholder="Correo">
-    <input type="Contrasena" id="Contrasena" class="register-input" placeholder="Contrasena">
-	
+    <input type="Contrasena" id="Contrasena" class="register-input" placeholder="Contrasena"><br>
+	Tipo:
+	<select id="Estado">
+	  <option value="2">Ajustador</option>
+	  <option value="1">Cliente</option>
+	  
+	</select>
 	
     <!--<button type="submit" value="Iniciar Sesión" onclick="prueba()" class="register-button">Iniciar Sesión </button>-->
   </form>
@@ -39,14 +44,15 @@
 	 
 	    var Correos =   document.getElementById("Correo").value;
 		var Contrsenia = document.getElementById("Contrasena").value;
+		var Tipo = document.getElementById("Estado").value;
 		
 		var param = '';
 		param = 'correa='+Correos+'&';
 	    param += 'contrasena='+Contrsenia+'&';
+		param += 'tipo='+Tipo;
 		
-		var xhttp = new XMLHttpRequest();
-		//xhttp.open("POST", "http://127.0.0.1:7070/Login", true); 
-		xhttp.open("POST", "http://proyectosa-aemymiaoda-uc.a.run.app/Login?"+param, true);  //https://proyectosa-aemymiaoda-uc.a.run.app
+		var xhttp = new XMLHttpRequest(); 
+		xhttp.open("POST", "http://proyectosa-aemymiaoda-uc.a.run.app/Login?"+param, true); 
 		//xhttp.open("POST", "http://127.0.0.1:7070/Login?"+param, true);
 		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhttp.onreadystatechange = function() {

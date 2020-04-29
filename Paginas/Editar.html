@@ -54,8 +54,8 @@
 		var param = 'jwt='+'lala';
 		
 		var xhttp = new XMLHttpRequest();
-		//xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo?"+param, true); 
-		xhttp.open("GET", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?", true); 
+		xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo?"+param, true); 
+		//xhttp.open("GET", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?", true); 
 		 
 		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhttp.onreadystatechange = function() {
@@ -84,25 +84,25 @@
 								   +' <td><strong>Valor_adjudicado</strong></td> '
 								   +' <td><strong>Imagen</strong></td> '
 								   +'</tr>'
-			for (i = 0; i < obj.length; i++) { //obj[i].foto
+			for (i = 0; i < obj.response.length; i++) { //obj[i].foto
 			 
-				tablea += '<tr>' + '<td>' +obj[i]._id+'</td>' 
-								+ '<td>' +obj[i].estado+'</td>' 
-								+ '<td>' +obj[i].tipo+'</td>' 
-								+ '<td>' +obj[i].marca+'</td>' 
-								+ '<td>' +obj[i].linea+'</td>' 
-								+ '<td>' +obj[i].modelo+'</td>' 
-								+ '<td>' +obj[i].placa+'</td>' 
-								+ '<td>' +obj[i].color+'</td>'
-							    + '<td>' +obj[i].arranca+'</td>'
-								+ '<td>' +obj[i].camina+'</td>'
-								+ '<td>' +obj[i].fallaMecanica+'</td>'
-								+ '<td>' +obj[i].garantiaInspeccion+'</td>'
-								+ '<td>' +obj[i].inundado+'</td>'
-								tablea += '<td>' +obj[i].colision+'</td>';
-								tablea += '<td>' +obj[i].afiliado+'</td>';
-								tablea += '<td>' +obj[i].valor_adjudicado+'</td>';
-								var fotos = obj[i].foto;
+				tablea += '<tr>' + '<td>' +obj.response[i]._id+'</td>' 
+								+ '<td>' +obj.response[i].estado+'</td>' 
+								+ '<td>' +obj.response[i].tipo+'</td>' 
+								+ '<td>' +obj.response[i].marca+'</td>' 
+								+ '<td>' +obj.response[i].linea+'</td>' 
+								+ '<td>' +obj.response[i].modelo+'</td>' 
+								+ '<td>' +obj.response[i].placa+'</td>' 
+								+ '<td>' +obj.response[i].color+'</td>'
+							    + '<td>' +obj.response[i].arranca+'</td>'
+								+ '<td>' +obj.response[i].camina+'</td>'
+								+ '<td>' +obj.response[i].fallaMecanica+'</td>'
+								+ '<td>' +obj.response[i].garantiaInspeccion+'</td>'
+								+ '<td>' +obj.response[i].inundado+'</td>'
+								tablea += '<td>' +obj.response[i].colision+'</td>';
+								tablea += '<td>' +obj.response[i].afiliado+'</td>';
+								tablea += '<td>' +obj.response[i].valor_adjudicado+'</td>';
+								var fotos = obj.response[i].foto;
 								var res = fotos.split(",");
 
 								tablea += '<td>' +'<img src="./img/'+res[0]+'\" alt="" width="150" height="100" />'+'</td>';
@@ -135,7 +135,7 @@
 			param += 'estado='+Estado+'&';
 			param += 'afiliado_adjudicado='+Afiliado+'&';
 			param += 'valor_adjudicado='+Valor_adjudicado;
-			param += 'jwt='+'a';
+			//param += 'jwt='+'a';
 			
 		}
 			

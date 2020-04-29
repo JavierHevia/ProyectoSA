@@ -1,18 +1,23 @@
-const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
-var xhr = new XMLHttpRequest();
+var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
+var xhr = new XMLHttpRequest()
 
-//xhr.open('POST', 'http://localhost:2013/veHiculo', true)
-var params = 'jwt=ja.eyJzY29wZSI6WyJ2ZWhpY3Vsby5nZXQiLCJmb3RvLmdldCIsImxpc3RhZG8uZ2V0IiwiYWZpbGlhZG8ucHV0IiwicGFnby5wb3N0Il0sImV4cCI6MTU4Nzc1MDMxMywiaWF0IjoxNTg3NzQ2NzEzLCJjbGllbnRfaWQiOiI5OTk4ODg3Nzc2NjY1NTU0NDQifQ.ptv_IEJWdpi7TuaAP2WNrS-V-Xk4aBTHJ6IPCES2ZktIvEiX9nuWwoHOP3munGz1I6k825yXZNFmthr9mtTKTg'
-xhr.open('GET', 'http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?'+params, true)
+var params = 'jwt=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJpbnYwMSIsInNjb3BlIjoiW1widmVoaWN1bG8uZ2V0XCIsIFwiZm90by5nZXRcIiwgXCJlc3RhZG8uZ2V0XCIsIFwidmVoaWN1bG8ucHV0XCJdIiwiZXhwIjoxNTg4MDQwMjE5LCJpYXQiOjE1ODgwMzY2MTl9.LrxF1-wS129IMl9v7kbdyOZUuhO-bRnS5Ev6gOfL9msBnfBG7L-JCTaT7-USzoQr16UrnH-Xk0v2YkPcgDLUfQ'
 
-// set `Content-Type` header
-xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+// configure a `POST` request
+xhr.open('GET', 'https://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?' + params, true)
 
-// pass `params` to `send()` method
-//xhr.send(params);
-xhr.send();
+xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+
+console.log('asdf')
+xhr.send()
 
 // listen for `load` event
 xhr.onload = () => {
-   console.log(xhr.responseText);
+  console.log(xhr.responseText)
+}
+xhr.onerror = () => {
+  console.error('Request failed.')
+}
+xhr.onprogress = (event) => {
+  console.log(`Downloaded ${event.loaded} of ${event.total}`)
 }

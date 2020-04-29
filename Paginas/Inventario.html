@@ -19,11 +19,11 @@
 	<p>Estado</p>
 
 	<select id="Estado">
-	  <option value="1">1.Tránsito</option>
-	  <option value="2">2.Almacenaje</option>
-	  <option value="3">3.Subastable</option>
-	  <option value="4">4.Adjudicado</option>
-	  <option value="5">5.Vendido</option>
+	  <option value="101">101 Ingreso</option>
+	  <option value="102">102 Almacenaje</option>
+	  <option value="103">103 Subastable</option>
+	  <option value="104">104 Adjudicado</option>
+	  <option value="105">105 Vendido</option>
 	</select>
 	
     <input type="tipo" id="tipo" class="register-input" placeholder="Tipo">
@@ -83,7 +83,11 @@
 		var modelo = document.getElementById("modelo").value;
 		var placa =  document.getElementById("placa").value;
 		var color =  document.getElementById("colorr").value;
+		var subasta = false
 		
+		if (estado == 103){
+			subasta = true
+		}
 		var arranca=document.getElementsByName('Arranca');
 		var resultadoarr="";
 		for(var i=0;i<arranca.length;i++)
@@ -161,8 +165,9 @@
 		//url: 'http://35.237.64.172:49160/InsertarAUTO',
 		
 		var xhttp = new XMLHttpRequest();
+		xhttp.open("POST", "http://proyectosa-aemymiaoda-uc.a.run.app/InsertarAUTO", true); 
+		
 		//xhttp.open("POST", "http://127.0.0.1:7070/InsertarAUTO", true); 
-		xhttp.open("POST", "http://35.237.64.172:49160/InsertarAUTO", true); 
 		xhttp.setRequestHeader("Content-Type", "application/json");
 		xhttp.onreadystatechange = function() {
 		   if (this.readyState == 4 && this.status == 200) {
@@ -184,7 +189,8 @@
 					garantiaInspeccion: resultadoins,
 					inundado: resultadoinun,
 					colision: resultadoc,
-					foto: fileName
+					foto: fileName,
+					subastable: subasta
 					
 		};
 		xhttp.send(JSON.stringify(data));
