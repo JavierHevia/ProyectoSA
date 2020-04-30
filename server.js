@@ -479,7 +479,7 @@ app.put('/Vehiculo', (req, res2) => {
       }
     }
   })
-  if (!autorizacion) {
+  if (autorizacion) {
     console.log(theUrl.query)
 
     var anews = parseInt(theUrl.query._id)
