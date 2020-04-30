@@ -12,6 +12,11 @@
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <body>
+<ul>
+  <li><a class="active" href="Inventario.html">REGISTRO AUTOS</a></li>
+  <li><a href="EditarEstado.html">EDICIÓN DE ESTADO</a></li>
+
+</ul>
   <h1 class="register-title">Inventario</h1>
   <form class="register">
   
@@ -62,6 +67,14 @@
 	<br>
 	<input type="radio" name="Colision" value="TRUE">SI 
     <input type="radio" name="Colision" value="FALSE">NO <br>
+	<br>	
+	<p>Precio Base</p>
+	<br>
+	<input type="PrecioBase" id="PrecioBase" class="register-input" placeholder="Precio Base (Q)">
+	<br>	
+	<p>Precio Mínimo</p>
+	<br>
+	<input type="PrecioMinimo" id="PrecioMinimo" class="register-input" placeholder="Precio Minimo (Q)">
 	<br>
 	<p>Foto</p>
 	<input type="file" id="adjunto" name="adjunto" accept=".jpg,.png" multiple="true">
@@ -83,6 +96,9 @@
 		var modelo = document.getElementById("modelo").value;
 		var placa =  document.getElementById("placa").value;
 		var color =  document.getElementById("colorr").value;
+		var precioBase = document.getElementById("PrecioBase").value;
+		var precioMinimo = document.getElementById("PrecioMinimo").value;
+		
 		var subasta = false
 		
 		if (estado == 103){
@@ -176,6 +192,8 @@
 			 alert(response)
 		   }
 		};
+		var p1 = parseInt(precioBase);
+		var p2 = parseInt(precioMinimo);
 		var data = {estado: estado,
 					tipo: tipo, 
 					marca: marca,
@@ -190,7 +208,10 @@
 					inundado: resultadoinun,
 					colision: resultadoc,
 					foto: fileName,
-					subastable: subasta
+					subastable: subasta,
+					precioBase: p1,
+					precioMinimo: p2
+					
 					
 		};
 		xhttp.send(JSON.stringify(data));

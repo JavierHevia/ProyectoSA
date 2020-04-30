@@ -63,7 +63,14 @@
 			 if (obj.cod !== undefined){ 
 				alert('Datos no correctos ' + obj.cod  + ' ' +obj.state)	
 			 }else {        // esta correcto el login lo mandas a tu pagina
-				alert(obj[0]._id)
+				if (Tipo==2){
+					alert(obj[0]._id);
+					location.href="InicioAjustador.html";
+				}else {
+					alert(obj[0]._id);
+					location.href="InicioCliente.html";
+				}
+				
 			 }
 			 
 		   }

@@ -171,8 +171,8 @@ app.use(express.json())
 app.post('/InsertarAUTO', (req, res) => {
   // console.log(req.body)
   // console.log(req.body.name)
-  var estain = parseInt(req.body.estado) 
-  var subastable2 = parseInt(req.body.subastable) 
+  var estain = parseInt(req.body.estado)
+  var subastable2 = parseInt(req.body.subastable)
   var json2 = {
     _id: Math.floor(Math.random() * (999 - 1)) + 1,
     estado: estain,
@@ -273,7 +273,7 @@ app.get('/Vehiculo', (req, res2) => {
         json2 = JSON.parse(parajson)
         // console.log(json2)
       } else if (qdata.estado !== undefined) {
-        var stain = parseInt(qdata.estado) 
+        var stain = parseInt(qdata.estado)
         var parajson = '{' + '\"estado\":' + stain + '}'
         json2 = JSON.parse(parajson)
         // console.log(json2)
@@ -295,7 +295,7 @@ app.get('/Vehiculo', (req, res2) => {
             console.log('Dato Encontrado Correctamente')
             // console.log(res)
             client.close()
-            var resull = { response: res}
+            var resull = { response: res }
             res2.send(resull)
           })
         } else {
@@ -308,7 +308,7 @@ app.get('/Vehiculo', (req, res2) => {
               var respuesta = JSON.parse('{ "cod":404, "state":"Not found"}')
               res2.send(respuesta)
             } else {
-              var resull = { response: res}
+              var resull = { response: res }
               res2.send(resull)
               // res2.send(res)
             }
@@ -378,8 +378,8 @@ app.get('/Foto', (req, res2) => {
             var respuesta = JSON.parse('{ "cod":404, "state":"Not found"}')
             res2.send(respuesta)
           } else {
-            var resull = { response: res}
-              res2.send(resull)
+            var resull = { response: res }
+            res2.send(resull)
             // res2.send(res)
           }
         })
@@ -447,8 +447,8 @@ app.get('/Estado', (req, res2) => {
             var respuesta = JSON.parse('{ "cod":404, "state":"Not found"}')
             res2.send(respuesta)
           } else {
-            var resull = { response: res}
-              res2.send(resull)
+            var resull = { response: res }
+            res2.send(resull)
             // res2.send(res)
           }
         })
@@ -479,14 +479,24 @@ app.put('/Vehiculo', (req, res2) => {
       }
     }
   })
-  if (autorizacion) {
+  if (!autorizacion) {
     console.log(theUrl.query)
 
     var anews = parseInt(theUrl.query._id)
     var datoid = { _id: anews }
     console.log(datoid)
     // var newdato = '$set: { \"estado\":' + '\"' + req.body.estado + '\"' + ', \"afiliado\":' + '\"' + req.body.afiliado_adjudicado + '\"' + ', \"valor_adjudicado\":' + '\"' + req.body.valor_adjudicado + '\"' + '}'
-    var newdato = { $set: { estado: theUrl.query.estado, afiliado: theUrl.query.afiliado_adjudicado, valor_adjudicado: theUrl.query.valor_adjudicado } }
+    var newdato = ''
+    if (theUrl.query.afiliado_adjudicado == undefined && theUrl.query.valor_adjudicado == undefined) {
+      var estain = parseInt(theUrl.query.estado)
+      newdato = { $set: { estado: estain } }
+    } else if (theUrl.query.valor_adjudicado == undefined) {
+      newdato = { $set: { estado: theUrl.query.estado, afiliado: theUrl.query.afiliado_adjudicado } }
+    } else if (theUrl.query.afiliado_adjudicado == undefined) {
+      var estain = parseInt(theUrl.query.estado)
+      newdato = { $set: { estado: estain, valor_adjudicado: theUrl.query.valor_adjudicado } }
+    }
+    // newdato = { $set: { estado: theUrl.query.estado, afiliado: theUrl.query.afiliado_adjudicado, valor_adjudicado: theUrl.query.valor_adjudicado } }
     console.log(newdato)
 
     var MongoClient = require('mongodb').MongoClient
@@ -512,8 +522,8 @@ app.put('/Vehiculo', (req, res2) => {
               console.log('Dato Encontrado Correctamente')
               // console.log(res)
               client.close()
-              //var respuesta = JSON.parse('{ "cod":201, "state":"Created"}')
-              var resull = { response: true}
+              // var respuesta = JSON.parse('{ "cod":201, "state":"Created"}')
+              var resull = { response: true }
               res2.send(resull)
             })
             console.log('Conexion Exitosa')

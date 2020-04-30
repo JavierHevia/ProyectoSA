@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Edición de Autos</title>
+  <title>Edición Estado de Autos</title>
   <link rel="stylesheet" href="style.css">
   <link href="css/bootstrap.min.css" rel="stylesheet"> 
   <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -15,11 +15,11 @@
 
 <body>
 <ul>
-  <li><a class="active" href="TalonarioParaCliente.html">VER AUTOS</a></li>
-  <li><a href="Editar.html">PUJAS</a></li>
+  <li><a class="active" href="Inventario.html">REGISTRO AUTOS</a></li>
+  <li><a href="EditarEstado.html">EDICIÓN DE ESTADO</a></li>
 
 </ul>
-  <h1 class="register-title">Editar Autos</h1>
+  <h1 class="register-title">Editar Estado Autos</h1>
   <form class="register">
 
     <input type="ID" id="ID" class="register-input" placeholder="ID"> <br>
@@ -31,8 +31,7 @@
 	  <option value="4">4.Adjudicado</option>
 	  <option value="5">5.Vendido</option>
 	</select>
-	<input type="Afiliado" id="Afiliado" class="register-input" placeholder="Afiliado Adjudicado (Código)">
-	<input type="Valor_adjudicado" id="Valor_adjudicado" class="register-input" placeholder="Valor Adjudicado (Q)">
+	
 	<br>
     <!--<button type="submit" value="Iniciar Sesión" onclick="prueba()" class="register-button">Iniciar Sesión </button>-->
   </form>
@@ -124,8 +123,8 @@
 	  function Editar(){
 		var id2 = document.getElementById("ID").value;
 		var Estado = document.getElementById("Estado").value;
-		var Afiliado = document.getElementById("Afiliado").value;
-		var Valor_adjudicado = document.getElementById("Valor_adjudicado").value;
+		//var Afiliado = document.getElementById("Afiliado").value;
+		//var Valor_adjudicado = document.getElementById("Valor_adjudicado").value;
 				
 		var envjson = '';
 		var param = '';
@@ -133,19 +132,19 @@
 		if(id2 == ''){
 			alert('Debe de ingresar por lo menos un dato')
 		}else{
-		//year=2017&
-			envjson = "{ \"_id\":"+id2+", \"estado\":"+ Estado+", \"afiliado_adjudicado\":"+ Afiliado +", \"valor_adjudicado\":"+ Valor_adjudicado+"}";	
+		
+			//envjson = "{ \"_id\":"+id2+", \"estado\":"+ Estado+", \"afiliado_adjudicado\":"+ Afiliado +", \"valor_adjudicado\":"+ Valor_adjudicado+"}";	
 			param = '_id='+id2+'&';
-			param += 'estado='+Estado+'&';
-			param += 'afiliado_adjudicado='+Afiliado+'&';
-			param += 'valor_adjudicado='+Valor_adjudicado;
+			param += 'estado='+Estado;
+			//param += 'afiliado_adjudicado='+Afiliado+'&';
+			//param += 'valor_adjudicado='+Valor_adjudicado;
 			//param += 'jwt='+'a';
 			
 		}
 			
 			var xhttp = new XMLHttpRequest();
-			//xhttp.open("PUT", "http://127.0.0.1:7070/Vehiculo?"+param, true); 
-			xhttp.open("PUT", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?"+param, true);
+			xhttp.open("PUT", "http://127.0.0.1:7070/Vehiculo?"+param, true); 
+			//xhttp.open("PUT", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?"+param, true);
 			
 			xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			xhttp.onreadystatechange = function() {
