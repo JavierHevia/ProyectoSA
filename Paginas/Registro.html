@@ -12,16 +12,19 @@
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <body>
+<ul>
+  <li><a class="active" href="OficinaInicio.html">VER/EDITAR USUARIO</a></li>
+  
+  <li><a href="Registro.html">CREAR USUARIO</a></li>
+  
+</ul>
   <h1 class="register-title">Bienvenido</h1>
   <form class="register">
   
     <input type="Nombre" id="Nombre" class="register-input" placeholder="Nombre">
-    <input type="Apellido" id="Apellido" class="register-input" placeholder="Apellido">
-	<input type="Direccion" id="Direccion" class="register-input" placeholder="Direccion">
 	<input type="Correo" id="Correo" class="register-input" placeholder="Correo">
 	<input type="Contraseña" id="Contraseña" class="register-input" placeholder="Contraseña">
-	<input type="NoCelular" id="NoCelular" class="register-input" placeholder="Celular">
-	<input type="DPI"  id="DPI" class="register-input" placeholder="DPI">
+
 	
     <input type="submit" value="Crear Usuario" onclick="EnviarUsuario()" class="register-button">
   </form>
@@ -31,35 +34,30 @@
 	 function EnviarUsuario(){
 	 
 		var nombre =   document.getElementById("Nombre").value;
-		var apellido = document.getElementById("Apellido").value;
-		var direccion = document.getElementById("Direccion").value;
 		var correa = document.getElementById("Correo").value;
 		var contrasena = document.getElementById("Contraseña").value;
-		var nocelular = document.getElementById("NoCelular").value;
-		var dpi = document.getElementById("DPI").value;
-		//var obj = encodeURI("{ \"nombre\":"+nombre+", \"apellido\":"+ apellido +" ,"+"\"direccion\":"+direccion +" ,"+"\"correa\":"+correa+ " ,"+"\"contrasena\":"+contrasena+" ,"+"\"nocelular\":"+nocelular+" ,"+"\"dpi\":"+dpi+"}");
 		var tipo = 1
 		//alert(obj);
 		
 		var xhttp = new XMLHttpRequest();
-		xhttp.open("POST", "http://proyectosa-aemymiaoda-uc.a.run.app/InsertarUS", true); 
-		//xhttp.open("POST", "http://127.0.0.1:7070/InsertarUS", true); 
+		//xhttp.open("POST", "http://proyectosaoficina-aemymiaoda-uc.a.run.app/Afiliado", true); 
+		xhttp.open("POST", "http://127.0.0.1:7070/Afiliado", true); 
 		xhttp.setRequestHeader("Content-Type", "application/json");
 		xhttp.onreadystatechange = function() {
 		   if (this.readyState == 4 && this.status == 200) {
 			 // Response
 			 var response = this.responseText;
 			 alert(response)
+		   }else {
+				var response = this.responseText;
+			 alert(response)
 		   }
 		};
 		var data = {nombre: nombre,
-					apellido: apellido, 
-					direccion: direccion,
 					correa: correa,
-					contrasena: contrasena, 
-					nocelular: nocelular,
-					dpi: dpi, 
-					tipo: tipo					
+					password: contrasena,
+					tipo: tipo,
+					vigente: false
 		};
 		xhttp.send(JSON.stringify(data));
 		 alert("Ingresado Correctamente")

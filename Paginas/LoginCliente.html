@@ -17,14 +17,9 @@
   <h1 class="register-title">LOGIN</h1>
   <form class="register">
 
-    <input type="Correo" id="Correo" class="register-input" placeholder="Correo">
+    <input type="Correo" id="Correo" class="register-input" placeholder="Codigo">
     <input type="Contrasena" id="Contrasena" class="register-input" placeholder="Contrasena"><br>
-	Tipo:
-	<select id="Estado">
-	  <option value="2">Ajustador</option>
-	  <option value="1">Cliente</option>
-	  
-	</select>
+	
 	
     <!--<button type="submit" value="Iniciar Sesión" onclick="prueba()" class="register-button">Iniciar Sesión </button>-->
   </form>
@@ -38,39 +33,31 @@
    <script type="text/javascript" src="server.js"></script>
    <script> 
   
-		
-	 
 	 function prueba(){
 	 
 	    var Correos =   document.getElementById("Correo").value;
 		var Contrsenia = document.getElementById("Contrasena").value;
-		var Tipo = document.getElementById("Estado").value;
+		//var Tipo = document.getElementById("Estado").value;
 		
 		var param = '';
-		param = 'correa='+Correos+'&';
-	    param += 'password='+Contrsenia+'&';
-		param += 'tipo='+Tipo;
+		param = 'codigo='+Correos+'&';
+	    param += 'password='+Contrsenia;
+		//param += 'tipo='+Tipo;
 		
 		var xhttp = new XMLHttpRequest(); 
-		xhttp.open("POST", "http://proyectosa-aemymiaoda-uc.a.run.app/Login?"+param, true); 
-		//xhttp.open("POST", "http://127.0.0.1:7070/Login?"+param, true);
+		//xhttp.open("POST", "http://proyectosaoficina-aemymiaoda-uc.a.run.app/Login?"+param, true); 
+		xhttp.open("POST", "http://127.0.0.1:7070/Afiliado?"+param, true); 
 		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhttp.onreadystatechange = function() {
 		   if (this.readyState == 4 && this.status == 200) {
 			 // Response
 			 var response = this.responseText;
 			 var obj = JSON.parse(response);
-			 if (obj.cod !== undefined){ 
+			 if (obj.codigo == undefined){ 
 				alert('Datos no correctos ' + obj.cod  + ' ' +obj.state)	
 			 }else {        // esta correcto el login lo mandas a tu pagina
-				if (Tipo==2){
-					alert(obj[0]._id);
-					location.href="InicioAjustador.html";
-				}else {
-					alert(obj[0]._id);
-					location.href="InicioCliente.html";
-				}
-				
+					alert(obj.codigo);
+					location.href="InicioClientes.html";
 			 }
 			 
 		   }

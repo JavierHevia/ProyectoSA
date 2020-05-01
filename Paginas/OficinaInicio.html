@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]> <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]> <html class="lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Oficina</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="css/bootstrap.min.css" rel="stylesheet"> 
+  <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<body>
+<ul>
+  <li><a class="active" href="OficinaInicio.html">VER/EDITAR USUARIO</a></li>
+ 
+  <li><a href="Registro.html">CREAR USUARIO</a></li>
+  
+</ul>
+  <h1 class="register-title">Clientes</h1>
+  <form class="register">
+
+    <input type="ID" id="ID" class="register-input" placeholder="ID"> <br>
+	<input type="PASS" id="PASS" class="register-input" placeholder="Contraseña"> <br>
+	<input type="NOM" id="NOM" class="register-input" placeholder="Nombre"> <br>
+	
+	<br>
+    <!--<button type="submit" value="Iniciar Sesión" onclick="prueba()" class="register-button">Iniciar Sesión </button>-->
+  </form>
+
+<div style="width: 273px; margin: 0 auto;">
+<center>
+	 <button value="Iniciar Sesión" onclick="prueba()" class="register-button"> Mostrar Usuarios</button>
+	 <button value="Editar"  onclick="Editar()" class="register-button"> Editar Usuario</button>
+</center>
+</div>
+
+	<br><br>
+<center>
+	 <div id="tabla">
+	 
+	 </div> 
+   
+   <script type="text/javascript" src="server.js"></script>
+   <script> 
+   
+   function prueba(){
+		
+		
+		var xhttp = new XMLHttpRequest();
+		xhttp.open("GET", "http://127.0.0.1:7070/Afiliado", true); 
+	    //xhttp.open("GET", "http://proyectosaoficina-aemymiaoda-uc.a.run.app/Afiliado", true); 
+		 
+		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhttp.onreadystatechange = function() {
+		   if (this.readyState == 4 && this.status == 200) {
+			 // Response
+			 var response = this.responseText;
+			
+			 var obj = JSON.parse(response);
+			 alert(response)
+			 //alert(obj[0]._id)
+			 var tablea = '<table  border="4">' + '<tr>' +' <td><strong>ID</strong></td> '
+								   +' <td><strong>NOMBRE</strong></td> '
+								   +' <td><strong>VIGENTE</strong></td> '
+								   
+								   +'</tr>'
+			for (i = 0; i < obj.response.length; i++) { //obj[i].foto
+			 
+				tablea += '<tr>' + '<td>' +obj.response[i]._id+'</td>' 
+								+ '<td>' +obj.response[i].nombre+'</td>' 
+								+ '<td>' +obj.response[i].vigente+'</td>' 
+															
+				+'</tr>' 
+			}
+				tablea += '</table>'
+				document.getElementById("tabla").innerHTML = tablea
+		   }
+		};		
+		xhttp.send();
+		alert("Enviado Correctamente")
+	 }
+	 
+	  function Editar(){
+		var id2 = document.getElementById("ID").value;
+		var PASS = document.getElementById("PASS").value;
+		var NOM = document.getElementById("NOM").value;
+		
+		var param = '';
+		
+		if(id2 == ''){
+			alert('Debe de ingresar por lo menos un dato')
+		}else{
+			param = '_id='+id2+'&';
+			param += 'password='+PASS+'&';
+			param += 'nombre='+NOM;
+			//param += 'vigente='+true;
+
+			var xhttp = new XMLHttpRequest();
+			xhttp.open("PUT", "http://127.0.0.1:7070/Afiliado?"+param, true); 
+			//xhttp.open("PUT", "http://proyectosaoficina-aemymiaoda-uc.a.run.app/Afiliado?"+param, true);
+			
+			xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xhttp.onreadystatechange = function() {
+			   if (this.readyState == 4 && this.status == 200) {
+				 // Response
+				 var response = this.responseText;
+				 var respuesta = JSON.parse(response)
+				 if (respuesta.cod === 201){
+					var respuesta = JSON.parse('{ "cod":201, "state":"Created"}')
+					alert(respuesta.cod + " " + respuesta.state);
+				}else if (respuesta.cod === 404){
+					alert(respuesta.cod + " " + respuesta.state);
+				}else {
+					alert(respuesta.cod + " " + respuesta.state);
+				}
+			   }		
+			};
+			
+			xhttp.send();
+			alert("Enviado Correctamente") 
+		}			
+			
+	  }
+   </script>
+</body>
+</html>
