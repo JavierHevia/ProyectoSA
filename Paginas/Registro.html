@@ -21,47 +21,92 @@
   <h1 class="register-title">Bienvenido</h1>
   <form class="register">
   
-    <input type="Nombre" id="Nombre" class="register-input" placeholder="Nombre">
-	<input type="Correo" id="Correo" class="register-input" placeholder="Correo">
-	<input type="Contraseña" id="Contraseña" class="register-input" placeholder="Contraseña">
+    <input type="Nombres" id="Nombres" class="register-input" placeholder="Nombre">
+	<input type="Correos" id="Correos" class="register-input" placeholder="Correo">
+	<input type="Contrasennia" id="Contrasennia" class="register-input" placeholder="Contraseña">
 
-	
-    <input type="submit" value="Crear Usuario" onclick="EnviarUsuario()" class="register-button">
   </form>
   
+  <div style="width: 273px; margin: 0 auto;">
+<center>
+	 <button value="Crear Usuario" onclick="EnviarUsuario()" class="register-button">Crear Usuario</button>
+</center>
+</div>
    <script> 
-  
-	 function EnviarUsuario(){
-	 
-		var nombre =   document.getElementById("Nombre").value;
-		var correa = document.getElementById("Correo").value;
-		var contrasena = document.getElementById("Contraseña").value;
-		var tipo = 1
-		//alert(obj);
+  var jwt = ''
+	function CrearToken(){
 		
-		var xhttp = new XMLHttpRequest();
-		//xhttp.open("POST", "http://proyectosaoficina-aemymiaoda-uc.a.run.app/Afiliado", true); 
-		xhttp.open("POST", "http://127.0.0.1:7070/Afiliado", true); 
-		xhttp.setRequestHeader("Content-Type", "application/json");
+		var param = '';
+		param = 'grant_type=client_credentials'+'&';
+	    param += 'client_id=inv01'+'&';
+		param += 'client_secret=invpass'+'&';
+		param += 'audience=01';
+		
+		var xhttp = new XMLHttpRequest(); 
+		xhttp.open("POST", "http://sajwt.azurewebsites.net/oauth/token?"+param, true);
+		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		//xhttp.withCredentials = true;
 		xhttp.onreadystatechange = function() {
 		   if (this.readyState == 4 && this.status == 200) {
 			 // Response
 			 var response = this.responseText;
-			 alert(response)
-		   }else {
-				var response = this.responseText;
-			 alert(response)
+			 var obj = JSON.parse(response);
+			 //alert(obj.token)
+			 jwt=obj.token
 		   }
 		};
-		var data = {nombre: nombre,
-					correa: correa,
-					password: contrasena,
-					tipo: tipo,
-					vigente: false
-		};
-		xhttp.send(JSON.stringify(data));
-		 alert("Ingresado Correctamente")
+	
+		xhttp.send();	
+	
+	 }
+  
+	 function EnviarUsuario(){
+	 
+	 CrearToken();
 		
+		setTimeout(function() {
+	 
+			
+			
+			var nombre =   document.getElementById("Nombres").value;
+			var correa = document.getElementById("Correos").value;
+			var contrasena = document.getElementById("Contrasennia").value;
+			var tipo = 1
+			//alert(obj);
+			
+			var param = '';
+			param = 'nombre='+nombre+'&';
+			param += 'correa='+correa+'&';
+			param += 'password='+contrasena+'&';
+			param += 'tipo='+tipo+'&';
+			param += 'vigente='+false+'&';
+			param += 'jwt='+jwt;
+			
+			var xhttp = new XMLHttpRequest();
+			xhttp.open("POST", "http://proyectosaoficina-aemymiaoda-uc.a.run.app/Afiliado?"+param, true); 
+			//xhttp.open("POST", "http://127.0.0.1:7070/Afiliado?"+param, true); 
+			xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xhttp.onreadystatechange = function() {
+			   if (this.readyState == 4 && this.status == 200) {
+				 // Response
+				 var response = this.responseText;
+				 alert(response)
+			   }else {
+					var response = this.responseText;
+				    alert(response)
+			   }
+			};
+			var data = {nombre: nombre,
+						correa: correa,
+						password: contrasena,
+						tipo: tipo,
+						vigente: false,
+						jwt: jwt
+			}; 
+			// JSON.stringify(data)
+			xhttp.send();
+			 alert("Ingresado Correctamente")
+		},2000);	
 	 }
    </script>
 </body>

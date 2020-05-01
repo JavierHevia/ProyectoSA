@@ -46,83 +46,120 @@
    
    <script type="text/javascript" src="server.js"></script>
    <script> 
-   
-   function prueba(){
+   var jwt = ''
+   function CrearToken(){
 		
-		var xhttp = new XMLHttpRequest();
-		xhttp.open("GET", "http://127.0.0.1:7070/Afiliado", true); 
-	    //xhttp.open("GET", "http://proyectosaoficina-aemymiaoda-uc.a.run.app/Afiliado", true); 
-		 
+		var param = '';
+		param = 'grant_type=client_credentials'+'&';
+	    param += 'client_id=inv01'+'&';
+		param += 'client_secret=invpass'+'&';
+		param += 'audience=01';
+		
+		var xhttp = new XMLHttpRequest(); 
+		xhttp.open("POST", "http://sajwt.azurewebsites.net/oauth/token?"+param, true);
 		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		//xhttp.withCredentials = true;
 		xhttp.onreadystatechange = function() {
 		   if (this.readyState == 4 && this.status == 200) {
 			 // Response
 			 var response = this.responseText;
-			
 			 var obj = JSON.parse(response);
-			 alert(response)
-			 //alert(obj[0]._id)
-			 var tablea = '<table  border="4">' + '<tr>' +' <td><strong>ID</strong></td> '
-								   +' <td><strong>NOMBRE</strong></td> '
-								   +' <td><strong>VIGENTE</strong></td> '
-								   
-								   +'</tr>'
-			for (i = 0; i < obj.response.length; i++) { //obj[i].foto
-			 
-				tablea += '<tr>' + '<td>' +obj.response[i]._id+'</td>' 
-								+ '<td>' +obj.response[i].nombre+'</td>' 
-								+ '<td>' +obj.response[i].vigente+'</td>' 
-															
-				+'</tr>' 
-			}
-				tablea += '</table>'
-				document.getElementById("tabla").innerHTML = tablea
+			 //alert(obj.token)
+			 jwt='jwt='+obj.token
 		   }
-		};		
-		xhttp.send();
-		alert("Enviado Correctamente")
+		};
+	
+		xhttp.send();	
+	
 	 }
-	 
-	  function Editar(){
-		var id2 = document.getElementById("ID").value;
-		var PASS = document.getElementById("PASS").value;
-		var NOM = document.getElementById("NOM").value;
+   
+   function prueba(){
+		CrearToken();
 		
-		var param = '';
+		setTimeout(function() {
 		
-		if(id2 == ''){
-			alert('Debe de ingresar por lo menos un dato')
-		}else{
-			param = '_id='+id2+'&';
-			param += 'password='+PASS+'&';
-			param += 'nombre='+NOM;
-			//param += 'vigente='+true;
-
 			var xhttp = new XMLHttpRequest();
-			xhttp.open("PUT", "http://127.0.0.1:7070/Afiliado?"+param, true); 
-			//xhttp.open("PUT", "http://proyectosaoficina-aemymiaoda-uc.a.run.app/Afiliado?"+param, true);
-			
+			//xhttp.open("GET", "http://127.0.0.1:7070/Afiliado?"+jwt, true); 
+			xhttp.open("GET", "http://proyectosaoficina-aemymiaoda-uc.a.run.app/Afiliado?"+jwt, true); 
+			 
 			xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			xhttp.onreadystatechange = function() {
 			   if (this.readyState == 4 && this.status == 200) {
 				 // Response
 				 var response = this.responseText;
-				 var respuesta = JSON.parse(response)
-				 if (respuesta.cod === 201){
-					var respuesta = JSON.parse('{ "cod":201, "state":"Created"}')
-					alert(respuesta.cod + " " + respuesta.state);
-				}else if (respuesta.cod === 404){
-					alert(respuesta.cod + " " + respuesta.state);
-				}else {
-					alert(respuesta.cod + " " + respuesta.state);
+				
+				 var obj = JSON.parse(response);
+				 alert(response)
+				 //alert(obj[0]._id)
+				 var tablea = '<table  border="4">' + '<tr>' +' <td><strong>ID</strong></td> '
+									   +' <td><strong>NOMBRE</strong></td> '
+									   +' <td><strong>VIGENTE</strong></td> '
+									   
+									   +'</tr>'
+				for (i = 0; i < obj.response.length; i++) { //obj[i].foto
+				 
+					tablea += '<tr>' + '<td>' +obj.response[i]._id+'</td>' 
+									+ '<td>' +obj.response[i].nombre+'</td>' 
+									+ '<td>' +obj.response[i].vigente+'</td>' 
+																
+					+'</tr>' 
 				}
-			   }		
-			};
-			
+					tablea += '</table>'
+					document.getElementById("tabla").innerHTML = tablea
+			   }
+			};		
 			xhttp.send();
-			alert("Enviado Correctamente") 
-		}			
+			alert("Enviado Correctamente")
+		},1000);
+	 }
+	 
+	  function Editar(){
+	  
+	  CrearToken();
+		
+		setTimeout(function() {
+		
+			var id2 = document.getElementById("ID").value;
+			var PASS = document.getElementById("PASS").value;
+			var NOM = document.getElementById("NOM").value;
 			
+			var param = '';
+			
+			if(id2 == ''){
+				alert('Debe de ingresar por lo menos un dato')
+			}else{
+				param = '_id='+id2+'&';
+				param += 'password='+PASS+'&';
+				param += 'nombre='+NOM+'&';
+				param += jwt;
+
+				var xhttp = new XMLHttpRequest();
+				//xhttp.open("PUT", "http://127.0.0.1:7070/Afiliado?"+param, true); 
+				xhttp.open("PUT", "http://proyectosaoficina-aemymiaoda-uc.a.run.app/Afiliado?"+param, true);
+				
+				xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				xhttp.onreadystatechange = function() {
+				   if (this.readyState == 4 && this.status == 200) {
+					 // Response
+					 var response = this.responseText;
+					 var respuesta = JSON.parse(response)
+					 if (respuesta.cod === 201){
+						var respuesta = JSON.parse('{ "cod":201, "state":"Created"}')
+						alert(respuesta.cod + " " + respuesta.state);
+					}else if (respuesta.cod === 404){
+						alert(respuesta.cod + " " + respuesta.state);
+					}else {
+						alert(respuesta.cod + " " +respuesta.nombre + " " +respuesta.vigente);
+					}
+				   }		
+				};
+				
+				xhttp.send();
+				alert("Enviado Correctamente") 
+				
+			 }	
+		},1000);		
+	
 	  }
    </script>
 </body>

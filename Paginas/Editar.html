@@ -97,70 +97,70 @@
 		
 		setTimeout(function() {
 
-		var xhttp = new XMLHttpRequest();
-		xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo?"+jwt, true); 
-		//alert(jwt)
-	    //xhttp.open("GET", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?"+jwt, true); 
-		 
-		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhttp.onreadystatechange = function() {
-		   if (this.readyState == 4 && this.status == 200) {
-			 // Response
-			 var response = this.responseText;
-			
-			 var obj = JSON.parse(response);
-			 alert(response)
-			 //alert(obj[0]._id)
-			 var tablea = '<table  border="4">' + '<tr>' +' <td><strong>ID</strong></td> '
-								   +' <td><strong>Estado</strong></td> '
-								   +' <td><strong>Tipo</strong></td> '
-								   +' <td><strong>Marca</strong></td> '
-								   +' <td><strong>Linea</strong></td> '
-								   +' <td><strong>Modelo</strong></td> '
-								   +' <td><strong>Placa</strong></td> '
-								   +' <td><strong>Color</strong></td> '
-								   +' <td><strong>Arranca</strong></td> '
-								   +' <td><strong>Camina</strong></td> '	
-								   +' <td><strong>Falla Mecanica</strong></td> '
-								   +' <td><strong>Garantia</strong></td> '
-								   +' <td><strong>Inundado</strong></td> '
-								   +' <td><strong>Colision</strong></td> '
-								   +' <td><strong>Afiliado</strong></td> '
-								   +' <td><strong>Valor_adjudicado</strong></td> '
-								   +' <td><strong>Imagen</strong></td> '
-								   +'</tr>'
-			for (i = 0; i < obj.response.length; i++) { //obj[i].foto
+			var xhttp = new XMLHttpRequest();
+			//xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo?"+jwt, true); 
+			//alert(jwt)
+			xhttp.open("GET", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?"+jwt, true); 
 			 
-				tablea += '<tr>' + '<td>' +obj.response[i]._id+'</td>' 
-								+ '<td>' +obj.response[i].estado+'</td>' 
-								+ '<td>' +obj.response[i].tipo+'</td>' 
-								+ '<td>' +obj.response[i].marca+'</td>' 
-								+ '<td>' +obj.response[i].linea+'</td>' 
-								+ '<td>' +obj.response[i].modelo+'</td>' 
-								+ '<td>' +obj.response[i].placa+'</td>' 
-								+ '<td>' +obj.response[i].color+'</td>'
-							    + '<td>' +obj.response[i].arranca+'</td>'
-								+ '<td>' +obj.response[i].camina+'</td>'
-								+ '<td>' +obj.response[i].fallaMecanica+'</td>'
-								+ '<td>' +obj.response[i].garantiaInspeccion+'</td>'
-								+ '<td>' +obj.response[i].inundado+'</td>'
-								tablea += '<td>' +obj.response[i].colision+'</td>';
-								tablea += '<td>' +obj.response[i].afiliado+'</td>';
-								tablea += '<td>' +obj.response[i].valor_adjudicado+'</td>';
-								var fotos = obj.response[i].foto;
-								var res = fotos.split(",");
+			xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xhttp.onreadystatechange = function() {
+			   if (this.readyState == 4 && this.status == 200) {
+				 // Response
+				 var response = this.responseText;
+				
+				 var obj = JSON.parse(response);
+				 alert(response)
+				 //alert(obj[0]._id)
+				 var tablea = '<table  border="4">' + '<tr>' +' <td><strong>ID</strong></td> '
+									   +' <td><strong>Estado</strong></td> '
+									   +' <td><strong>Tipo</strong></td> '
+									   +' <td><strong>Marca</strong></td> '
+									   +' <td><strong>Linea</strong></td> '
+									   +' <td><strong>Modelo</strong></td> '
+									   +' <td><strong>Placa</strong></td> '
+									   +' <td><strong>Color</strong></td> '
+									   +' <td><strong>Arranca</strong></td> '
+									   +' <td><strong>Camina</strong></td> '	
+									   +' <td><strong>Falla Mecanica</strong></td> '
+									   +' <td><strong>Garantia</strong></td> '
+									   +' <td><strong>Inundado</strong></td> '
+									   +' <td><strong>Colision</strong></td> '
+									   +' <td><strong>Afiliado</strong></td> '
+									   +' <td><strong>Valor_adjudicado</strong></td> '
+									   +' <td><strong>Imagen</strong></td> '
+									   +'</tr>'
+				for (i = 0; i < obj.response.length; i++) { //obj[i].foto
+				 
+					tablea += '<tr>' + '<td>' +obj.response[i]._id+'</td>' 
+									+ '<td>' +obj.response[i].estado+'</td>' 
+									+ '<td>' +obj.response[i].tipo+'</td>' 
+									+ '<td>' +obj.response[i].marca+'</td>' 
+									+ '<td>' +obj.response[i].linea+'</td>' 
+									+ '<td>' +obj.response[i].modelo+'</td>' 
+									+ '<td>' +obj.response[i].placa+'</td>' 
+									+ '<td>' +obj.response[i].color+'</td>'
+									+ '<td>' +obj.response[i].arranca+'</td>'
+									+ '<td>' +obj.response[i].camina+'</td>'
+									+ '<td>' +obj.response[i].fallaMecanica+'</td>'
+									+ '<td>' +obj.response[i].garantiaInspeccion+'</td>'
+									+ '<td>' +obj.response[i].inundado+'</td>'
+									tablea += '<td>' +obj.response[i].colision+'</td>';
+									tablea += '<td>' +obj.response[i].afiliado+'</td>';
+									tablea += '<td>' +obj.response[i].valor_adjudicado+'</td>';
+									var fotos = obj.response[i].foto;
+									var res = fotos.split(",");
 
-								tablea += '<td>' +'<img src="./img/'+res[0]+'\" alt="" width="150" height="100" />'+'</td>';
-							
-				+'</tr>' 
-			}
-				tablea += '</table>'
-				document.getElementById("tabla").innerHTML = tablea
-		   }
-		};		
-		xhttp.send();
-			
-		alert("Enviado Correctamente")
+									tablea += '<td>' +'<img src="./img/'+res[0]+'\" alt="" width="150" height="100" />'+'</td>';
+								
+					+'</tr>' 
+				}
+					tablea += '</table>'
+					document.getElementById("tabla").innerHTML = tablea
+			   }
+			};		
+			xhttp.send();
+				
+			alert("Enviado Correctamente")
 		},2000);	
 	 }
 	 
