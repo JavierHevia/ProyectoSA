@@ -52,14 +52,55 @@
    
    <script type="text/javascript" src="server.js"></script>
    <script> 
+
+	function sleep(milliseconds) {
+		var start = new Date().getTime();
+		for (var i = 0; i < 1e7; i++) {
+			if ((new Date().getTime() - start) > milliseconds){
+			break;
+			}
+		}
+	}
+	var jwt = ''
+	
+	function CrearToken(){
+		
+		var param = '';
+		param = 'grant_type=client_credentials'+'&';
+	    param += 'client_id=inv01'+'&';
+		param += 'client_secret=invpass'+'&';
+		param += 'audience=01';
+		
+		var xhttp = new XMLHttpRequest(); 
+		xhttp.open("POST", "http://sajwt.azurewebsites.net/oauth/token?"+param, true);
+		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhttp.withCredentials = true;
+		xhttp.onreadystatechange = function() {
+		   if (this.readyState == 4 && this.status == 200) {
+			 // Response
+			 var response = this.responseText;
+			 var obj = JSON.parse(response);
+			 //alert(obj.token)
+			 jwt='jwt='+obj.token
+		   }
+		};
+	
+		xhttp.send();	
+	
+	 }
+   
    
    function prueba(){
+   
 		
-		var param = 'jwt='+'lala';
+			CrearToken();
 		
+		setTimeout(function() {
+
 		var xhttp = new XMLHttpRequest();
-		//xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo", true); 
-	    xhttp.open("GET", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo", true); 
+		xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo?"+jwt, true); 
+		//alert(jwt)
+	    //xhttp.open("GET", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?"+jwt, true); 
 		 
 		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhttp.onreadystatechange = function() {
@@ -118,10 +159,17 @@
 		   }
 		};		
 		xhttp.send();
+			
 		alert("Enviado Correctamente")
+		},2000);	
 	 }
 	 
 	  function Editar(){
+	  
+		CrearToken();
+	  
+		setTimeout(function() {
+		
 		var id2 = document.getElementById("ID").value;
 		var Estado = document.getElementById("Estado").value;
 		var Afiliado = document.getElementById("Afiliado").value;
@@ -138,14 +186,14 @@
 			param = '_id='+id2+'&';
 			param += 'estado='+Estado+'&';
 			param += 'afiliado_adjudicado='+Afiliado+'&';
-			param += 'valor_adjudicado='+Valor_adjudicado;
-			//param += 'jwt='+'a';
+			param += 'valor_adjudicado='+Valor_adjudicado+'&';
+			param += jwt;
 			
 		}
 			
 			var xhttp = new XMLHttpRequest();
-			//xhttp.open("PUT", "http://127.0.0.1:7070/Vehiculo?"+param, true); 
-			xhttp.open("PUT", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?"+param, true);
+			xhttp.open("PUT", "http://127.0.0.1:7070/Vehiculo?"+param, true); 
+			//xhttp.open("PUT", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?"+param, true);
 			
 			xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			xhttp.onreadystatechange = function() {
@@ -163,7 +211,8 @@
 			};
 			
 			xhttp.send();
-		alert("Enviado Correctamente") 
+			alert("Enviado Correctamente") 
+		},2000);
 	  }
    </script>
 </body>

@@ -258,7 +258,7 @@ app.get('/Vehiculo', (req, res2) => {
   if (autorizacion) {
     console.log(theUrl.query)
     var json2 = null
-    if (theUrl.query == null) {
+    if (theUrl.query._id == undefined) {
       json2 = null
     } else {
       // var queryObj = queryString.parse(theUrl.query)
@@ -495,6 +495,9 @@ app.put('/Vehiculo', (req, res2) => {
     } else if (theUrl.query.afiliado_adjudicado == undefined) {
       var estain = parseInt(theUrl.query.estado)
       newdato = { $set: { estado: estain, valor_adjudicado: theUrl.query.valor_adjudicado } }
+    }else {
+      var estain = parseInt(theUrl.query.estado)
+      newdato = { $set: { estado: estain, valor_adjudicado: theUrl.query.valor_adjudicado, afiliado: theUrl.query.afiliado_adjudicado } }
     }
     // newdato = { $set: { estado: theUrl.query.estado, afiliado: theUrl.query.afiliado_adjudicado, valor_adjudicado: theUrl.query.valor_adjudicado } }
     console.log(newdato)

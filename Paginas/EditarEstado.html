@@ -52,13 +52,43 @@
    <script type="text/javascript" src="server.js"></script>
    <script> 
    
+   var jwt = ''
+	
+	function CrearToken(){
+		
+		var param = '';
+		param = 'grant_type=client_credentials'+'&';
+	    param += 'client_id=inv01'+'&';
+		param += 'client_secret=invpass'+'&';
+		param += 'audience=01';
+		
+		var xhttp = new XMLHttpRequest(); 
+		xhttp.open("POST", "http://sajwt.azurewebsites.net/oauth/token?"+param, true);
+		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhttp.withCredentials = true;
+		xhttp.onreadystatechange = function() {
+		   if (this.readyState == 4 && this.status == 200) {
+			 // Response
+			 var response = this.responseText;
+			 var obj = JSON.parse(response);
+			 //alert(obj.token)
+			 jwt='jwt='+obj.token
+		   }
+		};
+	
+		xhttp.send();	
+	
+	 }
+   
    function prueba(){
 		
-		var param = 'jwt='+'lala';
+		CrearToken();
 		
+		setTimeout(function() {
+
 		var xhttp = new XMLHttpRequest();
-		//xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo?"+param, true); 
-	    xhttp.open("GET", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?", true); 
+		//xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo?"+jwt, true); 
+	    xhttp.open("GET", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?"+jwt, true); 
 		 
 		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhttp.onreadystatechange = function() {
@@ -118,51 +148,57 @@
 		};		
 		xhttp.send();
 		alert("Enviado Correctamente")
+		},2000);	
 	 }
 	 
 	  function Editar(){
-		var id2 = document.getElementById("ID").value;
-		var Estado = document.getElementById("Estado").value;
-		//var Afiliado = document.getElementById("Afiliado").value;
-		//var Valor_adjudicado = document.getElementById("Valor_adjudicado").value;
+	  
+		CrearToken();
+	  
+		setTimeout(function() {
+		
+		
+			var id2 = document.getElementById("ID").value;
+			var Estado = document.getElementById("Estado").value;
+					
+			var envjson = '';
+			var param = '';
+			
+			if(id2 == ''){
+				alert('Debe de ingresar por lo menos un dato')
+			}else{
+			
+				//envjson = "{ \"_id\":"+id2+", \"estado\":"+ Estado+", \"afiliado_adjudicado\":"+ Afiliado +", \"valor_adjudicado\":"+ Valor_adjudicado+"}";	
+				param = '_id='+id2+'&';
+				param += 'estado='+Estado;
+				//param += 'afiliado_adjudicado='+Afiliado+'&';
+				//param += 'valor_adjudicado='+Valor_adjudicado;
+				param += jwt;
 				
-		var envjson = '';
-		var param = '';
-		
-		if(id2 == ''){
-			alert('Debe de ingresar por lo menos un dato')
-		}else{
-		
-			//envjson = "{ \"_id\":"+id2+", \"estado\":"+ Estado+", \"afiliado_adjudicado\":"+ Afiliado +", \"valor_adjudicado\":"+ Valor_adjudicado+"}";	
-			param = '_id='+id2+'&';
-			param += 'estado='+Estado;
-			//param += 'afiliado_adjudicado='+Afiliado+'&';
-			//param += 'valor_adjudicado='+Valor_adjudicado;
-			//param += 'jwt='+'a';
-			
-		}
-			
-			var xhttp = new XMLHttpRequest();
-			xhttp.open("PUT", "http://127.0.0.1:7070/Vehiculo?"+param, true); 
-			//xhttp.open("PUT", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?"+param, true);
-			
-			xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			xhttp.onreadystatechange = function() {
-			   if (this.readyState == 4 && this.status == 200) {
-				 // Response
-				 var response = this.responseText;
-				 var respuesta = JSON.parse(response)
-				 if (respuesta.cod === 201){
-					var respuesta = JSON.parse('{ "cod":201, "state":"Created"}')
-					alert(respuesta.cod + " " + respuesta.state);
-				}else if (respuesta.cod === 404){
-					alert(respuesta.cod + " " + respuesta.state);
-				}
-			   }		
-			};
-			
-			xhttp.send();
-		alert("Enviado Correctamente") 
+			}
+				
+				var xhttp = new XMLHttpRequest();
+				//xhttp.open("PUT", "http://127.0.0.1:7070/Vehiculo?"+param, true); 
+				xhttp.open("PUT", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?"+param, true);
+				
+				xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				xhttp.onreadystatechange = function() {
+				   if (this.readyState == 4 && this.status == 200) {
+					 // Response
+					 var response = this.responseText;
+					 var respuesta = JSON.parse(response)
+					 if (respuesta.cod === 201){
+						var respuesta = JSON.parse('{ "cod":201, "state":"Created"}')
+						alert(respuesta.cod + " " + respuesta.state);
+					}else if (respuesta.cod === 404){
+						alert(respuesta.cod + " " + respuesta.state);
+					}
+				   }		
+				};
+				
+				xhttp.send();
+			alert("Enviado Correctamente") 
+		},2000);
 	  }
    </script>
 </body>
