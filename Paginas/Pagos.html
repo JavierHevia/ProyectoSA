@@ -19,28 +19,20 @@
   <li><a href="Editar.html">PUJAS</a></li>
 
 </ul>
-  <h1 class="register-title">Editar Autos</h1>
+  <h1 class="register-title">Editar Usuarios</h1>
   <form class="register">
 
     <input type="ID" id="ID" class="register-input" placeholder="ID"> <br>
-	<p>Estado</p>
-    <select id="Estado">
-	  <option value="1">1.Tránsito</option>
-	  <option value="2">2.Almacenaje</option>
-	  <option value="3">3.Subastable</option>
-	  <option value="4">4.Adjudicado</option>
-	  <option value="5">5.Vendido</option>
-	</select>
-	<input type="Afiliado" id="Afiliado" class="register-input" placeholder="Afiliado Adjudicado (Código)">
-	<input type="Valor_adjudicado" id="Valor_adjudicado" class="register-input" placeholder="Valor Adjudicado (Q)">
+
+	<input type="Valor_adjudicado" id="Valor_adjudicado" class="register-input" placeholder="Monto (Q)">
 	<br>
     <!--<button type="submit" value="Iniciar Sesión" onclick="prueba()" class="register-button">Iniciar Sesión </button>-->
   </form>
 
 <div style="width: 273px; margin: 0 auto;">
 <center>
-	 <button value="Iniciar Sesión" onclick="prueba()" class="register-button"> Mostrar Todo</button>
-	 <button value="Editar"  onclick="Editar()" class="register-button"> Editar Información</button>
+	 <button value="Iniciar Sesión" onclick="prueba()" class="register-button"> Mostrar por codigo</button>
+	 <button value="Editar"  onclick="Editar()" class="register-button"> Editar Pago</button>
 </center>
 </div>
 
@@ -74,7 +66,7 @@
 		var xhttp = new XMLHttpRequest(); 
 		xhttp.open("POST", "http://sajwt.azurewebsites.net/oauth/token?"+param, true);
 		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhttp.withCredentials = true;
+		//xhttp.withCredentials = true;
 		xhttp.onreadystatechange = function() {
 		   if (this.readyState == 4 && this.status == 200) {
 			 // Response
@@ -92,16 +84,23 @@
    
    function prueba(){
    
+			var id2 = document.getElementById("ID").value;
 		
 			CrearToken();
 		
 		setTimeout(function() {
-
+			
+			var param = 'codigo='+id2+'&';
+			param += jwt;
+			
 			var xhttp = new XMLHttpRequest();
-			//xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo?"+jwt, true); 
+			//xhttp.open("GET", "http://127.0.0.1:7070/Pago?"+param, true); 
 			//alert(jwt)
-			xhttp.open("GET", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?"+jwt, true); 
-			 
+			
+			//xhttp.open("GET", "http://proyectosaoficina-aemymiaoda-uc.a.run.app/Pago?"+param, true); 
+ 
+			xhttp.open("GET", "http://esb-danii-mor.eastus.azurecontainer.io/Pago?"+param, true); 
+			
 			xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			xhttp.onreadystatechange = function() {
 			   if (this.readyState == 4 && this.status == 200) {
@@ -109,49 +108,18 @@
 				 var response = this.responseText;
 				
 				 var obj = JSON.parse(response);
-				 alert(response)
+				 //alert(response)
 				 //alert(obj[0]._id)
 				 var tablea = '<table  border="4">' + '<tr>' +' <td><strong>ID</strong></td> '
-									   +' <td><strong>Estado</strong></td> '
-									   +' <td><strong>Tipo</strong></td> '
-									   +' <td><strong>Marca</strong></td> '
-									   +' <td><strong>Linea</strong></td> '
-									   +' <td><strong>Modelo</strong></td> '
-									   +' <td><strong>Placa</strong></td> '
-									   +' <td><strong>Color</strong></td> '
-									   +' <td><strong>Arranca</strong></td> '
-									   +' <td><strong>Camina</strong></td> '	
-									   +' <td><strong>Falla Mecanica</strong></td> '
-									   +' <td><strong>Garantia</strong></td> '
-									   +' <td><strong>Inundado</strong></td> '
-									   +' <td><strong>Colision</strong></td> '
-									   +' <td><strong>Afiliado</strong></td> '
-									   +' <td><strong>Valor_adjudicado</strong></td> '
-									   +' <td><strong>Imagen</strong></td> '
+									   +' <td><strong>Monto</strong></td> '
+									   +' <td><strong>Fecha</strong></td> '
+									  
 									   +'</tr>'
-				for (i = 0; i < obj.response.length; i++) { //obj[i].foto
+				for (i = 0; i < obj.length; i++) { //obj[i].foto
 				 
-					tablea += '<tr>' + '<td>' +obj.response[i]._id+'</td>' 
-									+ '<td>' +obj.response[i].estado+'</td>' 
-									+ '<td>' +obj.response[i].tipo+'</td>' 
-									+ '<td>' +obj.response[i].marca+'</td>' 
-									+ '<td>' +obj.response[i].linea+'</td>' 
-									+ '<td>' +obj.response[i].modelo+'</td>' 
-									+ '<td>' +obj.response[i].placa+'</td>' 
-									+ '<td>' +obj.response[i].color+'</td>'
-									+ '<td>' +obj.response[i].arranca+'</td>'
-									+ '<td>' +obj.response[i].camina+'</td>'
-									+ '<td>' +obj.response[i].fallaMecanica+'</td>'
-									+ '<td>' +obj.response[i].garantiaInspeccion+'</td>'
-									+ '<td>' +obj.response[i].inundado+'</td>'
-									tablea += '<td>' +obj.response[i].colision+'</td>';
-									tablea += '<td>' +obj.response[i].afiliado+'</td>';
-									tablea += '<td>' +obj.response[i].valor_adjudicado+'</td>';
-									var fotos = obj.response[i].foto;
-									var res = fotos.split(",");
-
-									tablea += '<td>' +'<img src="./img/'+res[0]+'\" alt="" width="150" height="100" />'+'</td>';
-								
+					tablea += '<tr>' + '<td>' +obj[i]._id+'</td>' 
+									+ '<td>' +obj[i].monto+'</td>' 
+									+ '<td>' +obj[i].fecha+'</td>' 								
 					+'</tr>' 
 				}
 					tablea += '</table>'
@@ -171,8 +139,8 @@
 		setTimeout(function() {
 		
 		var id2 = document.getElementById("ID").value;
-		var Estado = document.getElementById("Estado").value;
-		var Afiliado = document.getElementById("Afiliado").value;
+		//var Estado = document.getElementById("Estado").value;
+		//var Afiliado = document.getElementById("Afiliado").value;
 		var Valor_adjudicado = document.getElementById("Valor_adjudicado").value;
 				
 		var envjson = '';
@@ -182,18 +150,21 @@
 			alert('Debe de ingresar por lo menos un dato')
 		}else{
 		//year=2017&
-			envjson = "{ \"_id\":"+id2+", \"estado\":"+ Estado+", \"afiliado_adjudicado\":"+ Afiliado +", \"valor_adjudicado\":"+ Valor_adjudicado+"}";	
-			param = '_id='+id2+'&';
-			param += 'estado='+Estado+'&';
-			param += 'afiliado_adjudicado='+Afiliado+'&';
-			param += 'valor_adjudicado='+Valor_adjudicado+'&';
+		
+			param = 'codigo='+id2+'&';
+			//param += 'estado='+Estado+'&';
+			//param += 'afiliado_adjudicado='+Afiliado+'&';
+			param += 'monto='+Valor_adjudicado+'&';
 			param += jwt;
 			
 		}
 			
 			var xhttp = new XMLHttpRequest();
-			//xhttp.open("PUT", "http://127.0.0.1:7070/Vehiculo?"+param, true); 
-			xhttp.open("PUT", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?"+param, true);
+			//xhttp.open("POST", "http://127.0.0.1:7070/Pago", true); 
+			
+			//xhttp.open("POST", "http://proyectosaoficina-aemymiaoda-uc.a.run.app/Pago", true);
+			
+			xhttp.open("POST", "http://esb-danii-mor.eastus.azurecontainer.io/Pago", true); 
 			
 			xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			xhttp.onreadystatechange = function() {
@@ -210,7 +181,7 @@
 			   }		
 			};
 			
-			xhttp.send();
+			xhttp.send(param);
 			alert("Enviado Correctamente") 
 		},2000);
 	  }

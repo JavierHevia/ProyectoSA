@@ -1,7 +1,7 @@
 'use strict'
 
 const express = require('express')
-
+var body_parser = require('body-parser')
 // Constants
 const PORT = 8080
 const HOST = '0.0.0.0'
@@ -16,7 +16,7 @@ var queryString = require('querystring')
 // App
 const app = express()
 app.use(cors())
-
+app.use(body_parser.urlencoded({extended:true}))
 // jwt
 const jwt = require('jsonwebtoken')
 const opts = { algorithms: ['RS256'] }
@@ -462,8 +462,11 @@ app.get('/Estado', (req, res2) => {
 app.put('/Vehiculo', (req, res2) => {
   // console.log(req.body)
   var theUrl = url.parse(req.url, true)
+  // console.log(req.body.jwt)
+  // const parsedHash = queryString.parse(theUrl.body)
+
   var autorizacion = false
-  jwt.verify(theUrl.query.jwt, public_key, opts, function (err, decoded) {
+  jwt.verify(req.body.jwt, public_key, opts, function (err, decoded) {
     if (err) {
       var respuesta = JSON.parse('{ "cod":403, "err":"El JWT no es valido o no contiene el scope de este servicio"}')
       res2.send(respuesta)
@@ -482,22 +485,22 @@ app.put('/Vehiculo', (req, res2) => {
   if (autorizacion) {
     console.log(theUrl.query)
 
-    var anews = parseInt(theUrl.query._id)
+    var anews = parseInt(req.body._id)
     var datoid = { _id: anews }
     console.log(datoid)
     // var newdato = '$set: { \"estado\":' + '\"' + req.body.estado + '\"' + ', \"afiliado\":' + '\"' + req.body.afiliado_adjudicado + '\"' + ', \"valor_adjudicado\":' + '\"' + req.body.valor_adjudicado + '\"' + '}'
     var newdato = ''
-    if (theUrl.query.afiliado_adjudicado == undefined && theUrl.query.valor_adjudicado == undefined) {
-      var estain = parseInt(theUrl.query.estado)
+    if (req.body.afiliado_adjudicado == undefined && req.body.valor_adjudicado == undefined) {
+      var estain = parseInt(req.body.estado)
       newdato = { $set: { estado: estain } }
-    } else if (theUrl.query.valor_adjudicado == undefined) {
-      newdato = { $set: { estado: theUrl.query.estado, afiliado: theUrl.query.afiliado_adjudicado } }
-    } else if (theUrl.query.afiliado_adjudicado == undefined) {
-      var estain = parseInt(theUrl.query.estado)
-      newdato = { $set: { estado: estain, valor_adjudicado: theUrl.query.valor_adjudicado } }
+    } else if (req.body.valor_adjudicado == undefined) {
+      newdato = { $set: { estado: req.body.estado, afiliado: req.body.afiliado_adjudicado } }
+    } else if (req.body.afiliado_adjudicado == undefined) {
+      var estain = parseInt(req.body.estado)
+      newdato = { $set: { estado: estain, valor_adjudicado: req.body.valor_adjudicado } }
     }else {
-      var estain = parseInt(theUrl.query.estado)
-      newdato = { $set: { estado: estain, valor_adjudicado: theUrl.query.valor_adjudicado, afiliado: theUrl.query.afiliado_adjudicado } }
+      var estain = parseInt(req.body.estado)
+      newdato = { $set: { estado: estain, valor_adjudicado: req.body.valor_adjudicado, afiliado: req.body.afiliado_adjudicado } }
     }
     // newdato = { $set: { estado: theUrl.query.estado, afiliado: theUrl.query.afiliado_adjudicado, valor_adjudicado: theUrl.query.valor_adjudicado } }
     console.log(newdato)

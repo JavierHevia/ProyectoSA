@@ -87,8 +87,12 @@
 		setTimeout(function() {
 
 			var xhttp = new XMLHttpRequest();
-			//xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo?"+jwt, true); 
-			xhttp.open("GET", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?"+jwt, true); 
+			xhttp.open("GET", "http://127.0.0.1:7070/Vehiculo?"+jwt, true); 
+			//xhttp.open("GET", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?"+jwt, true); 
+			
+			//xhttp.open("GET", "http://esb-danii-mor.eastus.azurecontainer.io/Vehiculo?"+jwt, true); 
+			
+
 			 
 			xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			xhttp.onreadystatechange = function() {
@@ -178,8 +182,10 @@
 			}
 				
 				var xhttp = new XMLHttpRequest();
-				//xhttp.open("PUT", "http://127.0.0.1:7070/Vehiculo?"+param, true); 
-				xhttp.open("PUT", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo?"+param, true);
+				//xhttp.open("PUT", "http://127.0.0.1:7070/Vehiculo", true); 
+				//xhttp.open("PUT", "http://proyectosa-aemymiaoda-uc.a.run.app/Vehiculo" true);
+				
+				xhttp.open("PUT", "http://esb-danii-mor.eastus.azurecontainer.io/Vehiculo", true); 
 				
 				xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 				xhttp.onreadystatechange = function() {
@@ -192,11 +198,13 @@
 						alert(respuesta.cod + " " + respuesta.state);
 					}else if (respuesta.cod === 404){
 						alert(respuesta.cod + " " + respuesta.state);
+					}else {
+						alert(response);
 					}
 				   }		
 				};
 				
-				xhttp.send();
+				xhttp.send(param);
 			alert("Enviado Correctamente") 
 		},2000);
 	  }
