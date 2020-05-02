@@ -87,6 +87,33 @@
  
    <script> 
   
+  var jwt = ''
+  function CrearToken(){
+		
+		var param = '';
+		param = 'grant_type=client_credentials'+'&';
+	    param += 'client_id=inv01'+'&';
+		param += 'client_secret=invpass'+'&';
+		param += 'audience=01';
+		
+		var xhttp = new XMLHttpRequest(); 
+		xhttp.open("POST", "http://sajwt.azurewebsites.net/oauth/token?"+param, true);
+		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		//xhttp.withCredentials = true;
+		xhttp.onreadystatechange = function() {
+		   if (this.readyState == 4 && this.status == 200) {
+			 // Response
+			 var response = this.responseText;
+			 var obj = JSON.parse(response);
+			 //alert(obj.token)
+			 jwt='jwt='+obj.token
+		   }
+		};
+	
+		xhttp.send();	
+	
+	 }
+  
 	 function EnviarUsuario(){
 	 
 		var estado = document.getElementById("Estado").value; 

@@ -18,6 +18,9 @@
   <li><a class="active" href="OficinaInicio.html">VER/EDITAR USUARIO</a></li>
  
   <li><a href="Registro.html">CREAR USUARIO</a></li>
+  <li><a href="PagosMembresia.html">PAGO DE MEMBRESIA</a></li>
+  <li><a href="TalonarioParaCliente.html">CATALOGO AUTOS</a></li>
+  <li><a href="EditarEstado.html">EDITAR AUTOS</a></li>
   
 </ul>
   <h1 class="register-title">Clientes</h1>
@@ -51,8 +54,8 @@
 		
 		var param = '';
 		param = 'grant_type=client_credentials'+'&';
-	    param += 'client_id=inv01'+'&';
-		param += 'client_secret=invpass'+'&';
+	    param += 'client_id=ofsub01'+'&';
+		param += 'client_secret=ofsubpass'+'&';
 		param += 'audience=01';
 		
 		var xhttp = new XMLHttpRequest(); 
@@ -70,7 +73,6 @@
 		};
 	
 		xhttp.send();	
-	
 	 }
    
    function prueba(){
@@ -79,12 +81,12 @@
 		setTimeout(function() {
 		
 			var xhttp = new XMLHttpRequest();
-			xhttp.open("GET", "http://127.0.0.1:7070/Afiliado?"+jwt, true); 
+			//xhttp.open("GET", "http://127.0.0.1:7070/Afiliado?"+jwt, true); 
 			
 			//xhttp.open("GET", "http://proyectosaoficina-aemymiaoda-uc.a.run.app/Afiliado?"+jwt, true); 
 			// alert(jwt)
 			
-			//xhttp.open("GET", "http://esb-danii-mor.eastus.azurecontainer.io/Afiliado?"+jwt, true);  
+		    xhttp.open("GET", "http://esb-danii-mor.eastus.azurecontainer.io/Afiliado?"+jwt, true);  
 			 
 			xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			xhttp.onreadystatechange = function() {
@@ -138,8 +140,10 @@
 				param += jwt;
 
 				var xhttp = new XMLHttpRequest();
-				xhttp.open("PUT", "http://127.0.0.1:7070/Afiliado", true); 
-				//xhttp.open("PUT", "http://proyectosaoficina-aemymiaoda-uc.a.run.app/Afiliado", true);
+				//xhttp.open("PUT", "http://127.0.0.1:7070/Afiliado", true); 
+				xhttp.open("PUT", "http://proyectosaoficina-aemymiaoda-uc.a.run.app/Afiliado", true);
+				
+				//xhttp.open("PUT", "http://esb-danii-mor.eastus.azurecontainer.io/Afiliado", true); 
 				
 				xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 				xhttp.onreadystatechange = function() {

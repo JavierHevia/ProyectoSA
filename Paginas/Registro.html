@@ -14,8 +14,9 @@
 <body>
 <ul>
   <li><a class="active" href="OficinaInicio.html">VER/EDITAR USUARIO</a></li>
-  
+ 
   <li><a href="Registro.html">CREAR USUARIO</a></li>
+  <li><a href="PagosMembresia.html">PAGO DE MEMBRESIA</a></li>
   
 </ul>
   <h1 class="register-title">Bienvenido</h1>
@@ -38,8 +39,8 @@
 		
 		var param = '';
 		param = 'grant_type=client_credentials'+'&';
-	    param += 'client_id=inv01'+'&';
-		param += 'client_secret=invpass'+'&';
+	    param += 'client_id=ofsub01'+'&';
+		param += 'client_secret=ofsubpass'+'&';
 		param += 'audience=01';
 		
 		var xhttp = new XMLHttpRequest(); 
@@ -83,8 +84,13 @@
 			param += 'jwt='+jwt;
 			
 			var xhttp = new XMLHttpRequest();
-			xhttp.open("POST", "http://proyectosaoficina-aemymiaoda-uc.a.run.app/Afiliado?"+param, true); 
-			//xhttp.open("POST", "http://127.0.0.1:7070/Afiliado?"+param, true); 
+			
+			xhttp.open("POST", "http://proyectosaoficina-aemymiaoda-uc.a.run.app/Afiliado", true); 
+			
+			//xhttp.open("POST", "http://127.0.0.1:7070/Afiliado", true); 
+			
+			//xhttp.open("POST", "http://esb-danii-mor.eastus.azurecontainer.io/Afiliado", true);  
+			
 			xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			xhttp.onreadystatechange = function() {
 			   if (this.readyState == 4 && this.status == 200) {
@@ -104,7 +110,7 @@
 						jwt: jwt
 			}; 
 			// JSON.stringify(data)
-			xhttp.send();
+			xhttp.send(param);
 			 alert("Ingresado Correctamente")
 		},2000);	
 	 }

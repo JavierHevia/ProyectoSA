@@ -16,7 +16,7 @@ var queryString = require('querystring')
 // App
 const app = express()
 app.use(cors())
-app.use(body_parser.urlencoded({extended:true}))
+app.use(body_parser.urlencoded({ extended: true }))
 // jwt
 const jwt = require('jsonwebtoken')
 const opts = { algorithms: ['RS256'] }
@@ -260,6 +260,11 @@ app.get('/Vehiculo', (req, res2) => {
     var json2 = null
     if (theUrl.query._id == undefined) {
       json2 = null
+      if (theUrl.query.estado !== undefined) {
+        var stain = parseInt(theUrl.query.estado)
+        var parajson = '{' + '\"estado\":' + stain + '}'
+        json2 = JSON.parse(parajson)
+      }
     } else {
       // var queryObj = queryString.parse(theUrl.query)
       // console.log(queryObj)
@@ -418,10 +423,10 @@ app.get('/Estado', (req, res2) => {
     } else {
       var qdata = theUrl.query
       // console.log(qdata._id)
-      if (qdata.estado !== undefined) {
+      if (qdata._id !== undefined) {
         // console.log('si')
-        var pp = parseInt(qdata.estado)
-        var parajson = '{' + '\"estado\":' + pp + '}'
+        var pp = parseInt(qdata._id)
+        var parajson = '{' + '\"_id\":' + pp + '}'
         json2 = JSON.parse(parajson)
       }
     }
@@ -498,7 +503,7 @@ app.put('/Vehiculo', (req, res2) => {
     } else if (req.body.afiliado_adjudicado == undefined) {
       var estain = parseInt(req.body.estado)
       newdato = { $set: { estado: estain, valor_adjudicado: req.body.valor_adjudicado } }
-    }else {
+    } else {
       var estain = parseInt(req.body.estado)
       newdato = { $set: { estado: estain, valor_adjudicado: req.body.valor_adjudicado, afiliado: req.body.afiliado_adjudicado } }
     }

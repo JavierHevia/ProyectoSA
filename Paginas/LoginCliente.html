@@ -33,12 +33,13 @@
    <script type="text/javascript" src="server.js"></script>
    <script> 
   
+  var jwt = ''
 	function CrearToken(){
 		
 		var param = '';
 		param = 'grant_type=client_credentials'+'&';
-	    param += 'client_id=inv01'+'&';
-		param += 'client_secret=invpass'+'&';
+	    param += 'client_id=ofsub01'+'&';
+		param += 'client_secret=ofsubpass'+'&';
 		param += 'audience=01';
 		
 		var xhttp = new XMLHttpRequest(); 
@@ -59,41 +60,51 @@
 	
 	 }
   
+ 
+  
 	 function prueba(){
 	 
-	    var Correos =   document.getElementById("Correo").value;
-		var Contrsenia = document.getElementById("Contrasena").value;
-		//var Tipo = document.getElementById("Estado").value;
+	  CrearToken();
 		
-		var param = '';
-		param = 'codigo='+Correos+'&';
-	    param += 'password='+Contrsenia;
-		//param += 'tipo='+Tipo;
+		setTimeout(function() {
+		 
+			var Correos =   document.getElementById("Correo").value;
+			var Contrsenia = document.getElementById("Contrasena").value;
+			//var Tipo = document.getElementById("Estado").value;
+			
+			var param = '';
+			param = 'codigo='+Correos+'&';
+			param += 'password='+Contrsenia;
+			//param += 'tipo='+Tipo;
+			param += '&'+jwt;
+			
+			var xhttp = new XMLHttpRequest(); 
+			xhttp.open("GET", "http://proyectosaoficina-aemymiaoda-uc.a.run.app/Afiliado?"+param, true); 
+			
+			//xhttp.open("GET", "http://127.0.0.1:7070/Afiliado?"+param, true); 
+			
+			xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xhttp.onreadystatechange = function() {
+			   if (this.readyState == 4 && this.status == 200) {
+				 // Response
+				 var response = this.responseText;
+				 var obj = JSON.parse(response);
+				 //alert(obj.response[0]);
+				 //alert(obj.response[0].codigo);
+				 if (obj.response[0].codigo == undefined){ 
+					alert('Datos no correctos ' + obj.response.cod  + ' ' +obj.response.state)	
+				 }else {        // esta correcto el login lo mandas a tu pagina
+						//alert(obj.response.codigo);
+						location.href="InicioClientes.html";
+				 }
+				 
+			   }
+			};
 		
-		var xhttp = new XMLHttpRequest(); 
-		//xhttp.open("POST", "http://proyectosaoficina-aemymiaoda-uc.a.run.app/Login?"+param, true); 
-		xhttp.open("POST", "http://127.0.0.1:7070/Afiliado?"+param, true); 
-		
-		xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhttp.onreadystatechange = function() {
-		   if (this.readyState == 4 && this.status == 200) {
-			 // Response
-			 var response = this.responseText;
-			 var obj = JSON.parse(response);
-			 if (obj.codigo == undefined){ 
-				alert('Datos no correctos ' + obj.cod  + ' ' +obj.state)	
-			 }else {        // esta correcto el login lo mandas a tu pagina
-					alert(obj.codigo);
-					location.href="InicioClientes.html";
-			 }
-			 
-		   }
-		};
-	
-		xhttp.send();
-		
-		 alert("Enviado Correctamente")     
-		
+			xhttp.send();
+			
+			 alert("Enviado Correctamente")     
+		},2000);
 	 }
 	 
 	 
